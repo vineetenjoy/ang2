@@ -61,13 +61,22 @@ app.get('/', function(req, res) {
 app.get('/otp', function(req, res) {
 	res.redirect(urls.home);
 });
+app.get('/otperror', function(req, res) {
+	res.redirect(urls.home);
+});
 app.get('/signup', function(req, res) {
 	res.redirect(urls.home);
 });
 app.get('/powaifest', function(req, res) {
 	res.redirect(urls.home);
 });
-app.get('/merchantslist', function(req, res) {
+app.get('/merchants', function(req, res) {
+	res.redirect(urls.home);
+});
+app.get('/registered', function(req, res) {
+	res.redirect(urls.home);
+});
+app.get('/home', function(req, res) {
 	res.redirect(urls.home);
 });
 app.get('/payment', function(req, res) {

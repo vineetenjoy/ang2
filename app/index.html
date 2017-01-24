@@ -22,6 +22,11 @@
             main {
                 flex: 1 0 auto;
             }
+
+            .checkbox-orange[type="checkbox"].filled-in:checked + label:after {
+                border: 2px solid red;
+                background-color: red;
+            }
         </style>
         <script src="dist/lib/libs.min.js"></script>
         <script src="dist/app/systemjs.config.js"></script>

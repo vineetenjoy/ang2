@@ -1,0 +1,44 @@
+<div *ngIf="erroredOut">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s12" align="center">
+            <img src="dist/app/images/fail.png" />
+        </div>
+    </div>
+    <div class="row"></div>
+    <div class="row" align="center">
+        <span class="s12"> Sorry, something went wrong. </span>
+        <span class="s12"> Please go back to
+            <a routerLink="/powaifest"> try again </a>
+        </span>
+    </div>
+</div>
+<div *ngIf="success">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s12" align="center">
+            <img src="dist/app/images/done.png" />
+        </div>
+    </div>
+    <div class="row"></div>
+    <div class="row" align="center">
+        <span class="s12"> Congratulations!!! You have successfully registered to Powai Fest </span>
+        <span class="s12"> Start exploring merchants
+            <a routerLink="/merchants"> here </a>
+        </span>
+    </div>
+</div>
+<div *ngIf="processing">
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row" align="center">
+        <span class="s12"> Please wait while we register you to Powai Fest..... </span>
+    </div>
+    <div class="row" align="center">
+        <span class="s12"> Please do not refresh!!! </span>
+    </div>
+</div>

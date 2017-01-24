@@ -8,5 +8,7 @@ export class User {
     public confirmPassword: string,
     public email: string,
     public phone: string,
-    public imgUrl: string) { }
+    public imgUrl: string,
+    public address: string,
+    public bollywoodRegister: boolean) { }
 }

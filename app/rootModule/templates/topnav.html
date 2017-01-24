@@ -1,5 +1,5 @@
 <nav class="nav-extended" style="font-family: 'Roboto Condensed';">
-    <div class="nav-wrapper">
+    <div class="nav-wrapper">        
         <div class="brand-logo">
             <a href="javascript:void(0)">
                 <img src="/app/images/benow.png" style="max-height: 64px; width: auto;"/>
@@ -8,9 +8,10 @@
         <ul class="right">
             <li>&nbsp;</li>
         </ul>
+        <i class="left material-icons" *ngIf="context.showBack" style="margin-left:-50px;" routerLink={{context.backRoute}}>ic_arrow_back</i>
         <ul class="tabs tabs-transparent">
             <li class="tab">
-                <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{title}}</a>
+                <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{context.title}}</a>
             </li>
         </ul>
     </div>

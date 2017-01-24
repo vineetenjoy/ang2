@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col s2" align="center">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background-size: cover; text-align: center; padding-top: 7px; font-size: 18px; font-weight: 300; color: white" [style.background]="color"> {{initials}} </div>
+    </div>
+    <div class="col s7">
+        <span style="font-size: 14px;">
+            <b> {{merchant.name}} </b>
+        </span>
+        <br/>
+        <span style="font-size: 12px;"> {{merchant.category}} </span>
+        <br/>
+        <span style="font-size: 12px;"> {{merchant.location}} </span>
+        <br/>
+        <span style="font-size: 10px;"> {{merchant.paymentModes}} </span>
+    </div>
+    <div class="col s3">
+        <span style="font-size: 12px; display: inline">
+            <b> {{merchant.rating}} </b>
+        </span>
+        <img style="display: inline;" height="14px;" src="dist/app/images/star.png" />
+    </div>
+</div>

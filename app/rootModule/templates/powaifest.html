@@ -1,0 +1,30 @@
+<div class="row"></div>
+<div class="row">
+    <div class="col s12" align="center">
+        <img height="150px" src="dist/app/images/p_logo.png" />
+    </div>
+</div>
+<div class="row"></div>
+<div class="row">
+    <div class="input-field col s12">
+        <input id="email" name="email" type="email" class="validate" required [(ngModel)]="user.email">
+        <label for="email">Your Email ID</label>
+    </div>
+    <div class="input-field col s12">
+        <textarea id="address" name="address" type="" class="materialize-textarea" [(ngModel)]="user.address"></textarea>
+        <label for="first_name">Your Address (optional)</label>
+    </div>
+    <div class="input-field col s12 m6">
+        <input type="checkbox" class="filled-in checkbox-orange" id="register" name="register" [(ngModel)]="user.bollywoodRegister" />
+        <label for="register">Register for Bollywood Night</label>
+    </div>
+    <div *ngIf="user.bollywoodRegister" class="input-field col s12 m6">
+        <select class="browser-default">
+            <option value="1" selected>1 Seat Only</option>
+            <option value="2">2 Seats Only</option>
+            <option value="3">3 Seats Only</option>
+            <option value="4">4 Seats Only</option>
+        </select>
+    </div>
+    <div class="row"></div>
+  </div>

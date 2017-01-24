@@ -3,21 +3,20 @@ import { Component } from '@angular/core';
 import { User } from './../../models/user';
 import { UserService } from './../../services/user';
 import { UtilsService } from './../../services/utils';
-import { SignUpService } from './../../services/signup';
 import { ClientContext } from './../../models/clientcontext';
 
 @Component({
   moduleId: module.id,
-  selector: 'otp',
-  templateUrl: './../templates/otp.html'
+  selector: 'powai-fest',
+  templateUrl: './../templates/powaifest.html'
 })
-export class OTPComponent  {
-  phone: string;
+export class PowaiFestComponent  {
+  user: User;
 
   constructor(private utilsService: UtilsService, private userService: UserService) { };
   
   ngOnInit() {
-    this.utilsService.setContext(new ClientContext("Verify Account", true, "/signup", "/otperror", "Verify", true));
-    this.phone = this.userService.getUser().phone;
+    this.utilsService.setContext(new ClientContext("Powai Fest", true, "/home", "/registered", "Register", true));
+    this.user = this.userService.user;
   }
 }

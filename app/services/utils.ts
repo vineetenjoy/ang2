@@ -1,34 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
+import { ClientContext } from './../models/clientcontext';
+
 @Injectable()
 export class UtilsService {
-  private _title: string;
-  private _ch: boolean;
+  private _context: ClientContext;
+  private _ch: number;
+  private _publishNums: number = 5
+  private _observeInterval: number = 1000
 
-  constructor() {
-    this._title = "";
-    this._ch = true;
+  constructor() {    
+    this._context = new ClientContext("", false, "", "", "", false);
+    this._ch = this._publishNums;
   }
 
-  getTitle():Observable<string> {
-    let ch = this._ch;
+  getContext():Observable<ClientContext> {
+    let me = this;
     return Observable
-        .interval(1000)
+        .interval(this._observeInterval)
         .filter(function () {
-            return ch;
+            return me._ch > 0;
         })
         .map(() => {
-            this._ch = false;
-            return this._title;
+            this._ch--;
+            return this._context;
         });
   }
 
-  setTitle(ttl:string){
-    this._ch = true;
-    this._title = ttl;
+  setContext(ctxt:ClientContext) {
+    this._ch = this._publishNums;
+    this._context = ctxt;
   }
 }
