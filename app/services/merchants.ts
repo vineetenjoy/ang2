@@ -14,4 +14,8 @@ export class MerchantsService {
   getMerchants():Merchant[] {
     return this._merchants;
   }
+
+  getMerchant(id:string):Merchant {
+    return this._merchants.find(m => m.id == id);
+  }
 }

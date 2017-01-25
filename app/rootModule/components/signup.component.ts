@@ -14,10 +14,10 @@ import { ClientContext } from './../../models/clientcontext';
 })
 export class SignUpComponent  {
   user: User;
-  isLoggedIn: boolean = true;
-  //isLoggedIn: boolean = false;
-  //isRegisteredToPFest: boolean = true;
-  isRegisteredToPFest: boolean = false;
+  //isLoggedIn: boolean = true;
+  isLoggedIn: boolean = false;
+  isRegisteredToPFest: boolean = true;
+  //isRegisteredToPFest: boolean = false;
 
   constructor(private router: Router, private utilsService: UtilsService, private userService: UserService) { };
   

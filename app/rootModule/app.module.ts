@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { MaterializeDirective } from "angular2-materialize";
@@ -11,6 +12,7 @@ import { AppComponent } from './components/app.component';
 import { TopNavComponent } from './components/topnav.component';
 import { SignUpComponent } from './components/signup.component';
 import { SignUpService } from './../services/signup';
+import { PaymentService } from './../services/payment';
 import { ActionBarComponent } from './components/actionbar.component';
 import { OTPComponent } from './components/otp.component';
 import { OTPErrorComponent } from './components/otperror.component';
@@ -25,10 +27,11 @@ import { PaymentCallbackComponent } from './components/paymentcallback.component
 @NgModule({
   imports: [ 
     BrowserModule, 
-    FormsModule, 
+    FormsModule,
+    HttpModule, 
     RouterModule.forRoot([
     {
-      path: 'payment',
+      path: 'payment/:merchantId/:color',
       component: PaymentComponent
     },
     {
@@ -68,13 +71,13 @@ import { PaymentCallbackComponent } from './components/paymentcallback.component
       redirectTo: '/signup', 
       pathMatch: 'full' 
     }
-    ])
+    ], { useHash: true })
   ],
   declarations: [ AppComponent, TopNavComponent, SignUpComponent, OTPComponent, 
     OTPErrorComponent, PowaiFestComponent, MaterializeDirective, ActionBarComponent,
     HomeComponent, MerchantsComponent, RegisteredComponent, PaymentComponent,
     PaymentCallbackComponent, MerchantComponent ],
-  providers: [UtilsService, SignUpService, MerchantsService, UserService],
+  providers: [UtilsService, SignUpService, MerchantsService, UserService, PaymentService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

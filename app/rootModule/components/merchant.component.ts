@@ -12,6 +12,7 @@ export class MerchantComponent  {
   @Input('index') index: number;
   initials: string;
   color: string;
+  colornohash: string;
 
   ngOnInit() {
     this.index++;
@@ -23,6 +24,8 @@ export class MerchantComponent  {
       this.color = "#00A694";
     else
       this.color = "#FFAD00";
+    
+    this.colornohash = this.color.substring(1);
 
     if(this.merchant && this.merchant.name) {
         let spl = this.merchant.name.split(' ');
@@ -30,7 +33,7 @@ export class MerchantComponent  {
           this.initials = spl[0][0];
         
         if(spl.length > 1 && spl[spl.length-1].length > 0)
-          this.initials += spl[spl.length-1][0]
+          this.initials += spl[spl.length-1][0];
 
         this.initials = this.initials.toUpperCase();
     }
