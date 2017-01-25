@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 import { User } from './../../models/user';
+
 import { UserService } from './../../services/user';
-import { UtilsService } from './../../services/utils';
-import { ClientContext } from './../../models/clientcontext';
 
 @Component({
   moduleId: module.id,
@@ -12,11 +11,15 @@ import { ClientContext } from './../../models/clientcontext';
 })
 export class PowaiFestComponent  {
   user: User;
+  showBack: boolean = true;
+  action: string = "Register";
+  backRoute: string = "/home";
+  nextRoute: string = "/registered";
+  title: string = "Powai Fest";
 
-  constructor(private utilsService: UtilsService, private userService: UserService) { };
+  constructor(private userService: UserService) { };
   
   ngOnInit() {
-    this.utilsService.setContext(new ClientContext("Powai Fest", true, "/home", "/registered", "Register", true));
     this.user = this.userService.user;
   }
 }

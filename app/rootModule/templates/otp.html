@@ -1,17 +1,25 @@
-<div class="row"></div>
-<div class="row">
-    <div class="col s12" align="center">
-        <img src="dist/app/images/login.png" />
+<header>
+    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
+</header>
+<main>
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s12" align="center">
+            <img src="dist/app/images/login.png" />
+        </div>
     </div>
-</div>
-<div class="row"></div>
-<div class="row">
-    <div class="input-field col s12">
-        <input id="otp" name="otp" type="number" class="validate" required>
-        <label for="otp">OTP</label>
+    <div class="row"></div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="otp" name="otp" type="number" class="validate" required>
+            <label for="otp">OTP</label>
+        </div>
     </div>
-</div>
-<div class="row"></div>
-<div class="row" align="center">
-    <span> Resend OTP to {{phone}} </span>
-</div>
+    <div class="row"></div>
+    <div class="row" align="center">
+        <span> Resend OTP to {{phone}} </span>
+    </div>
+</main>
+<footer class="page-footer" align="center">
+    <actionbar [nextRoute] = "nextRoute" [action] = "action"></actionbar>
+</footer>

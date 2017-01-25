@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
-import { UtilsService } from './../../services/utils';
 import { PaymentService } from './../../services/payment';
-import { ClientContext } from './../../models/clientcontext';
 
 @Component({
   moduleId: module.id,
@@ -10,13 +8,18 @@ import { ClientContext } from './../../models/clientcontext';
   templateUrl: './../templates/paymentcallback.html'
 })
 export class PaymentCallbackComponent  {
-  merchant: string;
   amount: number;
+  merchant: string;
   backURL: string;
   success: boolean = true;
   //success: boolean = false;
+  showBack: boolean = true;
+  action: string = "Find More Merchants";
+  backRoute: string = "/merchants";
+  nextRoute: string = "/merchants";
+  title: string = "Done";
 
-  constructor(private utilsService: UtilsService, private paymentService: PaymentService) { };
+  constructor(private paymentService: PaymentService) { };
   
   ngOnInit() {
     let pd = this.paymentService.getPaymentDetails();
@@ -24,9 +27,11 @@ export class PaymentCallbackComponent  {
     this.amount = pd.amount;
     this.backURL = pd.backURL;
 
-    if(this.success)
-      this.utilsService.setContext(new ClientContext("Done", true, "/merchants", "/merchants", "Find More Merchants", true));
-    else
-      this.utilsService.setContext(new ClientContext("Payment Gateway Error", true, this.backURL, this.backURL, "Try Again", true));
+    if(!this.success) {
+      this.action = "Try Again";
+      this.title = "Payment Gateway Error";
+      this.backRoute = this.backURL;
+      this.nextRoute = this.backURL;
+    }
   }
 }

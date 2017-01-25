@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { UtilsService } from './../../services/utils';
-import { ClientContext } from './../../models/clientcontext';
+import { Component } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -10,25 +7,31 @@ import { ClientContext } from './../../models/clientcontext';
   templateUrl: './../templates/otperror.html'
 })
 export class OTPErrorComponent  {
-  hasError: boolean;
+  //hasError: boolean = true;
+  hasError: boolean = false;
+  showBack: boolean = false;
+  showActionBar: boolean = false;
+  action: string = "";
+  backRoute: string = "";
+  nextRoute: string = "";
+  title: string = "Verifying";
 
-  constructor(private router: Router, private utilsService: UtilsService) { 
-      //this.hasError = true;
-      this.hasError = false;
-  };
+  constructor(private router: Router) { };
   
   ngOnInit() {
-    if(this.hasError)
-      this.utilsService.setContext(new ClientContext("OTP Error", true, "/signup", "/signup", "Sign Up", true));
-    else
-      this.utilsService.setContext(new ClientContext("Verifying", false, "", "", "", false));
-
     if(!this.hasError) {
       let me = this;
       setTimeout(function() {
         me.router.navigateByUrl('/powaifest');
       }, 2000);
     }
-    //this.utilsService.setContext(new ClientContext("Verification Error", true, "/signup", "/signup", "Sign Up", true));
+    else {
+      this.showBack = true;
+      this.showActionBar = true;
+      this.action = "Try Again";
+      this.backRoute = "/signup";
+      this.nextRoute = "/signup";
+      this.title = "Verification Error";
+    }
   }
 }

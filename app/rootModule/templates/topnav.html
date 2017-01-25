@@ -1,4 +1,4 @@
-<nav class="nav-extended" style="font-family: 'Roboto Condensed';">
+<nav class="nav-extended" style="font-family: 'Roboto Condensed'; background-color: #FE2521">
     <div class="nav-wrapper">        
         <div class="brand-logo">
             <a href="javascript:void(0)">
@@ -8,10 +8,10 @@
         <ul class="right">
             <li>&nbsp;</li>
         </ul>
-        <i class="left material-icons" *ngIf="context.showBack" style="margin-left:-50px;" routerLink={{context.backRoute}}>ic_arrow_back</i>
+        <i class="left material-icons" *ngIf="showBack" style="margin-left:-50px;" routerLink={{backRoute}}>ic_arrow_back</i>
         <ul class="tabs tabs-transparent">
             <li class="tab">
-                <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{context.title}}</a>
+                <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{title}}</a>
             </li>
         </ul>
     </div>

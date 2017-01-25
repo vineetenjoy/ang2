@@ -1,30 +1,38 @@
-<div *ngIf="!success">
-    <div class="row"></div>
-    <div class="row">
-        <div class="col s12" align="center">
-            <img src="dist/app/images/fail.png" />
+<header>
+    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
+</header>
+<main>
+    <div *ngIf="!success">
+        <div class="row"></div>
+        <div class="row">
+            <div class="col s12" align="center">
+                <img src="dist/app/images/fail.png" />
+            </div>
+        </div>
+        <div class="row"></div>
+        <div class="row" align="center">
+            <span class="s12"> Sorry, something went wrong with the payments. </span>
+            <span class="s12"> Please go back to
+                <a routerLink="/powaifest"> try again </a>
+            </span>
         </div>
     </div>
-    <div class="row"></div>
-    <div class="row" align="center">
-        <span class="s12"> Sorry, something went wrong with the payments. </span>
-        <span class="s12"> Please go back to
-            <a routerLink="/powaifest"> try again </a>
-        </span>
-    </div>
-</div>
-<div *ngIf="success">
-    <div class="row"></div>
-    <div class="row">
-        <div class="col s12" align="center">
-            <img src="dist/app/images/done.png" />
+    <div *ngIf="success">
+        <div class="row"></div>
+        <div class="row">
+            <div class="col s12" align="center">
+                <img src="dist/app/images/done.png" />
+            </div>
+        </div>
+        <div class="row"></div>
+        <div class="row" align="center">
+            <span class="s12"> Successfully paid ₹ {{amount}} to {{merchant}} </span>
+            <span class="s12"> Find more merchants
+                <a routerLink="backURL"> here </a>
+            </span>
         </div>
     </div>
-    <div class="row"></div>
-    <div class="row" align="center">
-        <span class="s12"> Successfully paid ₹ {{amount}} to {{merchant}} </span>
-        <span class="s12"> Find more merchants
-            <a routerLink="backURL"> here </a>
-        </span>
-    </div>
-</div>
+</main>
+<footer class="page-footer" align="center">
+    <actionbar [nextRoute] = "nextRoute" [action] = "action"></actionbar>
+</footer>

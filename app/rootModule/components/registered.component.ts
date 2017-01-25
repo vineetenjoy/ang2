@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 
-import { UtilsService } from './../../services/utils';
-import { ClientContext } from './../../models/clientcontext';
-
 @Component({
   moduleId: module.id,
   selector: 'registered',
@@ -15,15 +12,29 @@ export class RegisteredComponent  {
   //success: boolean = false;
   //processing: boolean = true;
   processing: boolean = false;
-
-  constructor(private utilsService: UtilsService) { };
+  showBack: boolean = false;
+  showActionBar: boolean = false;
+  action: string = "";
+  backRoute: string = "";
+  nextRoute: string = "";
+  title: string = "Registering";  
   
   ngOnInit() {
-    if(this.success)
-      this.utilsService.setContext(new ClientContext("Registered", true, "/home", "/merchants", "Find Merchants", true));
-    else if(this.erroredOut)
-      this.utilsService.setContext(new ClientContext("Registration Error", true, "/powaifest", "/powaifest", "Try Again", true));
-    else
-      this.utilsService.setContext(new ClientContext("Registering", false, "", "", "", false));
+    if(this.success) {
+      this.showBack = true;
+      this.showActionBar = true;
+      this.action = "Find Merchants";
+      this.backRoute = "/home";
+      this.nextRoute = "/merchants";
+      this.title = "Registered";  
+    }
+    else if(this.erroredOut) {
+      this.showBack = true;
+      this.showActionBar = true;
+      this.action = "Try Again";
+      this.backRoute = "/powaifest";
+      this.nextRoute = "/powaifest";
+      this.title = "Registration Error";  
+    }
   }
 }

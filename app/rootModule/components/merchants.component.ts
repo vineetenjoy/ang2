@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
-import { UtilsService } from './../../services/utils';
-import { MerchantsService } from './../../services/merchants';
 import { Merchant } from './../../models/merchant';
-import { ClientContext } from './../../models/clientcontext';
+
+import { MerchantsService } from './../../services/merchants';
 
 @Component({
   moduleId: module.id,
@@ -12,11 +11,13 @@ import { ClientContext } from './../../models/clientcontext';
 })
 export class MerchantsComponent  {
   merchants: Merchant[];
+  showBack: boolean = true;
+  backRoute: string = "/home";
+  title: string = "Pay Merchants";
 
-  constructor(private utilsService: UtilsService, private merchantsService: MerchantsService) { };
+  constructor(private merchantsService: MerchantsService) { };
   
   ngOnInit() {
-    this.utilsService.setContext(new ClientContext("Pay Merchants", true, "/home", "", "", false));
     this.merchants = this.merchantsService.getMerchants();
   }
 }
