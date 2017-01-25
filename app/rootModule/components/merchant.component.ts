@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 import { Merchant } from './../../models/merchant';
 
+import { UtilsService } from './../../services/utils';
+
 @Component({
   moduleId: module.id,
   selector: 'merchant',
@@ -13,6 +15,8 @@ export class MerchantComponent  {
   initials: string;
   color: string;
   colornohash: string;
+
+  constructor(private utilsService: UtilsService) { };
 
   ngOnInit() {
     this.index++;
@@ -27,15 +31,7 @@ export class MerchantComponent  {
     
     this.colornohash = this.color.substring(1);
 
-    if(this.merchant && this.merchant.name) {
-        let spl = this.merchant.name.split(' ');
-        if(spl.length > 0 && spl[0].length > 0)
-          this.initials = spl[0][0];
-        
-        if(spl.length > 1 && spl[spl.length-1].length > 0)
-          this.initials += spl[spl.length-1][0];
-
-        this.initials = this.initials.toUpperCase();
-    }
+    if(this.merchant && this.merchant.name)
+        this.initials = this.utilsService.getInitials(this.merchant.name);
   }
 }

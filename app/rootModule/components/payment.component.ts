@@ -5,7 +5,7 @@ import { Merchant } from './../../models/merchant';
 
 import { PaymentService } from './../../services/payment';
 import { MerchantsService } from './../../services/merchants';
-
+import { UtilsService } from './../../services/utils';
 
 @Component({
   moduleId: module.id,
@@ -30,7 +30,8 @@ export class PaymentComponent  {
   nextRoute: string = "/paymentcallback";
   unselectedColor: string = 'transparent';
 
-  constructor(private route: ActivatedRoute, private paymentService: PaymentService, private router: Router, private merchantsService: MerchantsService) { 
+  constructor(private route: ActivatedRoute, private paymentService: PaymentService, private router: Router, 
+    private merchantsService: MerchantsService, private utilsService: UtilsService) { 
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
   };
@@ -51,15 +52,7 @@ export class PaymentComponent  {
     let merchantId = this.route.snapshot.params['merchantId'];
     this.color = '#' + this.route.snapshot.params['color'];
     this.merchant = this.merchantsService.getMerchant(merchantId);
-    if(this.merchant && this.merchant.name) {
-        let spl = this.merchant.name.split(' ');
-        if(spl.length > 0 && spl[0].length > 0)
-          this.initials = spl[0][0];
-        
-        if(spl.length > 1 && spl[spl.length-1].length > 0)
-          this.initials += spl[spl.length-1][0];
-
-        this.initials = this.initials.toUpperCase();
-    }
+    if(this.merchant && this.merchant.name)
+        this.initials = this.utilsService.getInitials(this.merchant.name);
   }
 }
