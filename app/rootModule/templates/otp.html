@@ -1,25 +1,31 @@
-<header>
-    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
-</header>
-<main>
-    <div class="row"></div>
-    <div class="row">
-        <div class="col s12" align="center">
-            <img src="dist/app/images/login.png" />
+<form (ngSubmit)="onSubmit()" #otpForm="ngForm">
+    <header>
+        <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
+    </header>
+    <main>
+        <div class="row"></div>
+        <div class="row">
+            <div class="col s12" align="center">
+                <img src="dist/app/images/login.png" />
+            </div>
         </div>
-    </div>
-    <div class="row"></div>
-    <div class="row">
-        <div class="input-field col s12">
-            <input id="otp" name="otp" type="number" class="validate" required>
-            <label for="otp">OTP</label>
+        <div class="row"></div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="otp" name="otp" type="number" class="validate" required [(ngModel)] = "otp">
+                <label for="otp">OTP</label>
+            </div>
         </div>
-    </div>
-    <div class="row"></div>
-    <div class="row" align="center">
-        <span> Resend OTP to {{phone}} </span>
-    </div>
-</main>
-<footer class="page-footer" style="background-color: #FE2521;" align="center">
-    <actionbar [nextRoute] = "nextRoute" [action] = "action"></actionbar>
-</footer>
+        <div class="row"></div>
+        <div class="row" align="center">
+            <span> 
+                <a (click) = "resendOTP()"> Resend OTP </a>
+                to {{user.phone}} 
+            </span>
+        </div>
+    </main>
+    <footer [style.background] = "otpForm.form.valid ? '#FE2521' : '#E2E1DD'"  class="page-footer" align="center">
+        <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
+            [invalidForm]="!otpForm.form.valid"></actionbar>
+    </footer>
+</form>

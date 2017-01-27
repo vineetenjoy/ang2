@@ -5,14 +5,16 @@
     <div class="row"></div>
     <div class="row">
         <div class="col s12" align="center">
-            <img src="dist/app/images/done.png" />
+            <img src="dist/app/images/fail.png" />
         </div>
     </div>
     <div class="row"></div>
     <div class="row" align="center">
-        <span class="s12"> Congratulations!!! You have successfully registered to Powai Fest </span>
-        <span class="s12"> Start exploring merchants
-            <a routerLink="/merchants"> here </a>
+        <span class="s12"> {{content}} </span>
+    </div>
+    <div class="row" align="center">
+        <span class="s12"> Please
+            <a [routerLink]="nextRoute"> Try Again. </a>
         </span>
     </div>
 </main>

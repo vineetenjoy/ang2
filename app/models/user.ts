@@ -1,14 +1,12 @@
 export class User {
   constructor(
     public id: string,
-    public name: string,
     public firstName: string,
     public lastName: string,
-    public password: string,
-    public confirmPassword: string,
     public email: string,
     public phone: string,
-    public imgUrl: string,
     public address: string,
-    public bollywoodRegister: boolean) { }
+    public powaiFestRegister: boolean,
+    public bollywoodRegister: boolean,
+    public numSeats: number) { }
 }

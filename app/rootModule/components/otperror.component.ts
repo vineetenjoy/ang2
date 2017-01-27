@@ -1,37 +1,31 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
+import { User } from './../../models/user';
+
+import { UserService } from './../../services/user';
+
 @Component({
   moduleId: module.id,
   selector: 'otperror',
   templateUrl: './../templates/otperror.html'
 })
 export class OTPErrorComponent  {
-  //hasError: boolean = true;
-  hasError: boolean = false;
-  showBack: boolean = false;
-  showActionBar: boolean = false;
-  action: string = "";
-  backRoute: string = "";
-  nextRoute: string = "";
-  title: string = "Verifying";
+  user: User;  
+  submit: boolean = false;
+  showBack: boolean = true;
+  invalidForm: boolean = false;
+  showActionBar: boolean = true;
+  action: string = "Try Again";
+  backRoute: string = "/signup";
+  nextRoute: string = "/signup";
+  title: string = "Verification Error";  
 
-  constructor(private router: Router) { };
-  
+  constructor(private router: Router, private userService: UserService) { };
+
   ngOnInit() {
-    if(!this.hasError) {
-      let me = this;
-      setTimeout(function() {
-        me.router.navigateByUrl('/powaifest');
-      }, 2000);
-    }
-    else {
-      this.showBack = true;
-      this.showActionBar = true;
-      this.action = "Try Again";
-      this.backRoute = "/signup";
-      this.nextRoute = "/signup";
-      this.title = "Verification Error";
-    }
+    this.user = this.userService.getUser();
+    if(!this.user || !this.user.phone || !this.user.firstName || !this.user.lastName)
+      this.router.navigateByUrl('signup');
   }
 }

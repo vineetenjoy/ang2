@@ -8,7 +8,7 @@ var logger = require('./../utils/Logger');
 var msgs = require('./../utils/Messages');
 var config = require('./../configs/Config');
 var userRep = require('./../mongoDB/UserDB');
-var utils = require('./../utils/commonUtils');
+var utils = require('./../utils/CommonUtils');
 
 /* PASSPORT IMPLEMENTATION START */
 // Login implementation.

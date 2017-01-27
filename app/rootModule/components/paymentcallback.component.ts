@@ -11,8 +11,8 @@ export class PaymentCallbackComponent  {
   amount: number;
   merchant: string;
   backURL: string;
-  success: boolean = true;
-  //success: boolean = false;
+  //success: boolean = true;
+  success: boolean = false;
   showBack: boolean = true;
   action: string = "Find More Merchants";
   backRoute: string = "/merchants";

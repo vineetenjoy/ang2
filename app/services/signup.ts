@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './../models/user';
+
 import { UtilsService } from './utils';
 
 @Injectable()
@@ -14,27 +15,33 @@ export class SignUpService {
     this._baseURL = this.utilsService.getBaseURL();
   }
 
-  private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
-  }
-
-  sendOTP(phone: string): Promise<string> {
+  sendOTP(phone: string): Promise<boolean> {
     return this.http
-            .post(this._baseURL + 'payments/registration/sendWebOTP', JSON.stringify({ "mobileNumber": phone }), { headers: this._headers })
+            .post(this._baseURL + 'payments/registration/sendWebOTP', JSON.stringify({ "mobileNumber": phone }), 
+              { headers: this._headers })
             .toPromise()
-            .then(res => JSON.stringify(res.json().data))
-            .catch(this.handleError);
+            .then(res => res.json().responseFromAPI)
+            .catch(res => false);
   }
 
-  isUNameAvailable(uname:string) {
-    return true;
-  }
-
-  createUser(user:User) {
-    return { isSuccess: true, uerId: 'abcd' };
-  }
-
-  validateUser(userId:string, oTP:string) {
-      return { isSuccess: true, errMsg: '' };
+  validateUser(user:User, otp:string): Promise<string> {
+      let obj = { 
+                  "appUserReg": {
+                      "username": user.phone.toString(), 
+                      "fullName": user.firstName + ' ' + user.lastName, 
+                      "mobileNumber": user.phone.toString()
+                    },
+                    "registrationOTP": {
+                      "mobileNumber": user.phone.toString(), 
+                      "otp" : otp.toString()
+                    }
+                  };
+                        
+      return this.http
+              .post(this._baseURL + 'payments/registration/registerWebBenowUser', JSON.stringify(obj), 
+                { headers: this._headers })
+              .toPromise()
+              .then(res => JSON.stringify(res.json()))
+              .catch(res => JSON.stringify(res.json()));
   }
 }

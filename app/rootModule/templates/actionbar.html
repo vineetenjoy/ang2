@@ -1,4 +1,6 @@
 <div class="row">
-    <a routerLink={{nextRoute}} class="waves-effect waves-light btn-flat col s12" 
-    style="background-color: transparent; color: white; text-transform: capitalize; font-size: 22px;">{{action}}</a>
+    <button *ngIf="submit" type="submit" class="waves-effect waves-light btn-flat col s12" name="next" [disabled]="invalidForm"
+        style="background-color: #FE2521; color: white; text-transform: capitalize; font-size: 22px;">Next</button>
+    <a *ngIf="!submit" [routerLink]="nextRoute" class="waves-effect waves-light btn-flat col s12" 
+        style="background-color: transparent; color: white; text-transform: capitalize; font-size: 22px;">{{action}}</a>
 </div>
