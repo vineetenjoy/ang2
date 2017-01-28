@@ -12,6 +12,6 @@ export class RegisteredComponent  {
   showActionBar: boolean = true;
   action: string = "Find Merchants";
   backRoute: string = "/home";
-  nextRoute: string = "/merchants";
+  nextRoute: string = "/merchants/0";
   title: string = "Registered";  
 }

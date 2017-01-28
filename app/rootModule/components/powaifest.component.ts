@@ -25,11 +25,8 @@ export class PowaiFestComponent  {
     if(!this.user.bollywoodRegister)
       this.user.numSeats = 0;
     
-    this.user.powaiFestRegister = true;
-    let success = this.userService.registerForPowaiFest(this.user);
-      //.then(success => this.act(success))
-    
-    this.act(success);
+    this.userService.registerForPowaiFest(this.user)
+      .then(success => this.act(success))
   }
 
   act(success: boolean) {
@@ -45,7 +42,9 @@ export class PowaiFestComponent  {
 
   ngOnInit() {
     this.user = this.userService.getUser();
-    if(!this.user.powaiFestRegister)
+    if(!this.user || !this.user.id)
+      this.router.navigateByUrl('signup');
+    else if(!this.user.powaiFestRegister)
       this.user.numSeats = 1;
   }
 }

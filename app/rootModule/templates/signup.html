@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+<form *ngIf="loaded" (ngSubmit)="onSubmit()" #signupForm="ngForm">
     <header>
         <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
     </header>

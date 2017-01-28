@@ -31,7 +31,7 @@ export class MerchantComponent  {
     
     this.colornohash = this.color.substring(1);
 
-    if(this.merchant && this.merchant.name)
-        this.initials = this.utilsService.getInitials(this.merchant.name);
+    if(this.merchant && this.merchant.displayName)
+        this.initials = this.utilsService.getInitials(this.merchant.displayName);
   }
 }

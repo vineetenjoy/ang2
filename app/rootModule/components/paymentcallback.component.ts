@@ -15,8 +15,8 @@ export class PaymentCallbackComponent  {
   success: boolean = false;
   showBack: boolean = true;
   action: string = "Find More Merchants";
-  backRoute: string = "/merchants";
-  nextRoute: string = "/merchants";
+  backRoute: string = "/merchants/0";
+  nextRoute: string = "/merchants/0";
   title: string = "Done";
 
   constructor(private paymentService: PaymentService) { };

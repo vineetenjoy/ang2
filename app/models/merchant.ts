@@ -1,10 +1,10 @@
 export class Merchant {
   constructor(
-    public id: string,
-    public name: string,
+    public merchantId: string,
+    public displayName: string,
     public category: string,
-    public location: string,
+    public locality: string,
     public paymentModes: string,
-    public imgUrl: string,
-    public rating: number) { }
+    public imgsrc: string,
+    public averageRating: number) { }
 }

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { User } from './../../models/user';
 
 import { UserService } from './../../services/user';
+import { UtilsService } from './../../services/utils';
 import { SignUpService } from './../../services/signup';
 
 @Component({
@@ -14,18 +15,15 @@ import { SignUpService } from './../../services/signup';
 export class SignUpComponent  {
   user: User;
   submit: boolean = true;
+  loaded: boolean = false;
   showBack: boolean = false;
   action: string = "Next";
   backRoute: string = "";
   nextRoute: string = "/otp";
   title: string = "Create a New Account";
   
-  //isLoggedIn: boolean = true;
-  isLoggedIn: boolean = false;
-  isRegisteredToPFest: boolean = true;
-  //isRegisteredToPFest: boolean = false;
-
-  constructor(private router: Router, private userService: UserService, private signupService: SignUpService) { };
+  constructor(private router: Router, private utilsService: UtilsService, private userService: UserService, 
+    private signupService: SignUpService) { };
 
   onSubmit() {
     this.userService.setUser(this.user);
@@ -39,15 +37,28 @@ export class SignUpComponent  {
     else
       this.router.navigateByUrl('/error/1');
   }
+
+  redirect(success: boolean) {
+    if(success)
+      this.router.navigateByUrl('/home');
+    else
+      this.router.navigateByUrl('/powaifest');
+  }
+
+  init(success: boolean) {
+    if(success)
+      this.userService.isRegisteredToPFest()
+        .then(res => this.redirect(res))
+    else
+      this.loaded = true;
+  }
   
   ngOnInit() {
-    if(this.userService.isLoggedIn()) {
-      if(this.isRegisteredToPFest)
-        this.router.navigateByUrl('/home');
-      else
-        this.router.navigateByUrl('/powaifest');
-    }
-    
     this.user = this.userService.getUser();
+    if(!this.utilsService.hasToken()) 
+      this.loaded = true;
+    else
+      this.userService.isLoggedIn()
+        .then(res => this.init(res))
   }
 }

@@ -49,7 +49,7 @@ import { MerchantsService } from './../services/merchants';
       component: RegisteredComponent
     },
     {
-      path: 'merchants',
+      path: 'merchants/:page',
       component: MerchantsComponent
     },
     {

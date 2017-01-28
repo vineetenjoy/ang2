@@ -1,11 +1,39 @@
 <header>
-    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
+    <nav class="nav-extended" style="font-family: 'Roboto Condensed'; background-color: #FE2521;">
+        <div class="nav-wrapper">        
+            <div class="brand-logo center">
+                <a href="javascript:void(0)">
+                    <img src="/app/images/benow.png" style="max-height: 64px; width: auto;"/>
+                </a>
+            </div>
+            <ul class="right">
+                <li>&nbsp;</li>
+            </ul>
+            <i class="left material-icons" style="margin-left:-50px;" (click)="back()">ic_arrow_back</i>
+            <ul class="tabs tabs-transparent">
+                <li class="tab">
+                    <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{title}}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
-<div class="row">
-    <div class="input-field col s12">
-        <i class="material-icons prefix">search</i>
-        <input id="search" name="search" type="text" class="validate">
-        <label for="search">Search</label>
+<main>
+    <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons prefix">search</i>
+            <input id="search" name="search" type="text" class="validate" [(ngModel)]="search" 
+                (keyup.enter)="enter()">
+            <label for="search" [ngClass]="{active: search}">Search</label>
+        </div>
     </div>
-</div>
-<merchant *ngFor="let merchant of merchants; let i = index;" [merchant] = "merchant" [index] = "i"></merchant>
+    <div *ngIf="!processing">
+        <merchant *ngFor="let merchant of merchants; let i = index;" [merchant] = "merchant" [index] = "i"></merchant>
+    </div>
+</main>
+<footer *ngIf="!processing && hasMorePages" style="background-color: #FE2521;"  class="page-footer" align="center">
+    <div class="row">
+        <a class="waves-effect waves-light btn-flat col s12" (click)="more()"
+            style="background-color: transparent; color: white; text-transform: capitalize; font-size: 22px;">{{action}}</a>
+    </div>
+</footer>
