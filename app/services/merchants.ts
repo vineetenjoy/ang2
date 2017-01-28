@@ -117,7 +117,7 @@ export class MerchantsService {
     this._merchants = new Array();
     this.pushInSearches('/merchants/' + page.toString() + ';search=' + search);
     let searchObj = {
-      "emailAddress":user.phone,
+      "emailAddress": user.id.toString(),
       "lattitude":"0.0",
       "longitude":"0.0",
       "pageNumber":page,

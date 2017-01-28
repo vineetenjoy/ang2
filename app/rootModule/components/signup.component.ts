@@ -38,27 +38,29 @@ export class SignUpComponent  {
       this.router.navigateByUrl('/error/1');
   }
 
-  redirect(success: boolean) {
-    if(success)
-      this.router.navigateByUrl('/home');
+  redirect(usr: User) {
+    if(usr) {
+      this.user = usr;
+      if(this.user.powaiFestRegister)
+        this.router.navigateByUrl('/home');
+      else
+        this.router.navigateByUrl('/powaifest');
+    }
     else
       this.router.navigateByUrl('/powaifest');
   }
-
-  init(success: boolean) {
-    if(success)
-      this.userService.isRegisteredToPFest()
-        .then(res => this.redirect(res))
-    else
-      this.loaded = true;
-  }
   
   ngOnInit() {
-    this.user = this.userService.getUser();
-    if(!this.utilsService.hasToken()) 
-      this.loaded = true;
+    this.userService.getUser()
+      .then(res => this.init(res))
+  }
+
+  init(usr: User) {
+    this.user = usr;
+    if(this.user && this.user.id)
+      this.userService.getPFRegistrationDetails(this.user)
+        .then(res => this.redirect(res));
     else
-      this.userService.isLoggedIn()
-        .then(res => this.init(res))
+      this.loaded = true;
   }
 }

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { User } from './../../models/user';
 
 import { UserService } from './../../services/user';
+import { UtilsService } from './../../services/utils';
 import { SignUpService } from './../../services/signup';
 
 @Component({
@@ -21,7 +22,8 @@ export class OTPComponent  {
   nextRoute: string = "";
   title: string = "Verify Account";
 
-  constructor(private router: Router, private userService: UserService, private signupService: SignUpService) { };
+  constructor(private router: Router, private userService: UserService, private utilsService: UtilsService, 
+    private signupService: SignUpService) { };
 
   onSubmit() {
     this.signupService.validateUser(this.user, this.otp).then(res => this.actVerify(res));
@@ -40,6 +42,7 @@ export class OTPComponent  {
     this.user.id = this.user.phone;
     this.userService.setUser(this.user);
     localStorage.setItem('beNOWut', JSON.stringify({ username: this.user.phone, token: token }));
+    this.utilsService.refreshHeader();
     this.router.navigateByUrl('/powaifest');
   }
 
@@ -54,7 +57,12 @@ export class OTPComponent  {
   }
 
   ngOnInit() {
-    this.user = this.userService.getUser();
+    this.userService.getUser()
+      .then(res => this.init(res))
+  }
+
+  init(usr: User) {
+    this.user = usr;
     if(!this.user || !this.user.phone || !this.user.firstName || !this.user.lastName)
       this.router.navigateByUrl('signup');
   }

@@ -1,3 +1,4 @@
+<form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
 <header>
     <nav class="nav-extended" style="font-family: 'Roboto Condensed'; background-color: #FE2521;">
         <div class="nav-wrapper">        
@@ -19,104 +20,107 @@
     </nav>
 </header>
 <main>
-    <div class="row"></div>
-    <div class="row valign-wrapper">
-        <div class="col s3" align="right">
-            <span style="font-size: 18px;">
-                <b>Pay :</b>
-            </span>
-        </div>
-        <div class="col s9 valign-wrapper">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background-size: cover; text-align: center; 
-                padding-top: 15px; font-size: 22px; font-weight: 300; color: white" [style.background]="color"> 
-                {{initials}} </div>
-            <div style="font-size: 18px;padding-left:10px;">
-                <span>
-                    <b> {{merchant.displayName}} </b>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="row"></div>
-    <hr style="height: 5px;border: none;background-color: #EDECEA;color: #EDECEA;">
-    <div *ngIf="!debitSupport && !creditSupport">
+    <div *ngIf="merchant">
         <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row" align="center">
-            <div class="col s1"></div>
-            <span class="col s10"> Sorry, Payment to this merchant is supported only in Andriod App. </span>
-            <div class="col s1"></div>
-        </div>
-        <div class="row" align="center">
-            <div class="col s1"></div>
-            <span class="col s10"> Explore
-                <a routerLink="/merchants/0"> more Merchants </a>
-                in your area.
-            </span>
-            <div class="col s1"></div>
-        </div>
-    </div>
-    <div *ngIf="debitSupport || creditSupport">
         <div class="row valign-wrapper">
-            <div class="col s1"></div>
-            <div class="col s4">
+            <div class="col s3" align="right">
                 <span style="font-size: 18px;">
-                    <b>Amount :</b>
+                    <b>Pay :</b>
                 </span>
             </div>
-            <div class="input-field col s7">        
-                <span class="prefix" style="color:red; font-size:28px;">₹</span>
-                <input id="amount" name="amount" type="number" step="0.01" style="font-size:26px;" class="validate" 
-                    required [(ngModel)]="amount">
+            <div class="col s9 valign-wrapper">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background-size: cover; text-align: center; 
+                    padding-top: 15px; font-size: 22px; font-weight: 300; color: white" [style.background]="color"> 
+                    {{initials}} </div>
+                <div style="font-size: 18px;padding-left:10px;">
+                    <span>
+                        <b> {{merchant.displayName}} </b>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="row valign-wrapper">
-            <div class="col s1"></div>
-            <div class="col s4">
-                <span style="font-size: 18px;">
-                    <b>You Pay :</b>
-                </span>
+        <div class="row"></div>
+        <hr style="height: 5px;border: none;background-color: #EDECEA;color: #EDECEA;">
+        <div *ngIf="!debitSupport && !creditSupport">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row" align="center">
+                <div class="col s1"></div>
+                <span class="col s10"> Sorry, Payment to this merchant is supported only in Andriod App. </span>
+                <div class="col s1"></div>
             </div>
-            <div class="input-field col s7">        
-                <span class="prefix" style="color:red; font-size:28px;">₹</span>
-                <input id="amount" name="amount" disabled type="number" style="font-size:26px;color:red;" 
-                    class="validate" required [(ngModel)]="amount">
+            <div class="row" align="center">
+                <div class="col s1"></div>
+                <span class="col s10"> Explore
+                    <a routerLink="/merchants/0"> more Merchants </a>
+                    in your area.
+                </span>
+                <div class="col s1"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col s1"></div>
-            <div class="col s11">
-                <span style="font-size: 18px;">
-                    <b>Payment Options :</b>
-                </span>
+        <div *ngIf="debitSupport || creditSupport">
+            <div class="row valign-wrapper">
+                <div class="col s1"></div>
+                <div class="col s4">
+                    <span style="font-size: 18px;">
+                        <b>Amount :</b>
+                    </span>
+                </div>
+                <div class="input-field col s7">        
+                    <span class="prefix" style="color:red; font-size:28px;">₹</span>
+                    <input id="amount" name="amount" type="number" step="0.01" style="font-size:26px;" class="validate" 
+                        required [(ngModel)]="amount">
+                </div>
             </div>
-        </div>
-        <div *ngIf="creditSupport" class="row valign-wrapper" [style.background]="creditColor" (click)="selectPaymentType(1)">
-            <div class="col s1"></div>
-            <div class="col s3">
-                <img height="60px;" src="dist/app/images/utilities_grey.png" />
+            <div class="row valign-wrapper">
+                <div class="col s1"></div>
+                <div class="col s4">
+                    <span style="font-size: 18px;">
+                        <b>You Pay :</b>
+                    </span>
+                </div>
+                <div class="input-field col s7">        
+                    <span class="prefix" style="color:red; font-size:28px;">₹</span>
+                    <input id="amount" name="amount" disabled type="number" style="font-size:26px;color:red;" 
+                        class="validate" required [(ngModel)]="amount">
+                </div>
             </div>
-            <div class="col s8" align="center">
-                <span style="font-size: 18px;">
-                    <b>Credit Card</b>
-                </span>
-            </div>    
-        </div>
-        <div *ngIf="debitSupport" class="row valign-wrapper" [style.background]="debitColor" (click)="selectPaymentType(2)">
-            <div class="col s1"></div>
-            <div class="col s3">
-                <img height="60px;" src="dist/app/images/utilities_grey.png" />        
+            <div class="row">
+                <div class="col s1"></div>
+                <div class="col s11">
+                    <span style="font-size: 18px;">
+                        <b>Payment Options :</b>
+                    </span>
+                </div>
             </div>
-            <div class="col s8" align="center">
-                <span style="font-size: 18px;">
-                    <b>Debit Card</b>
-                </span>
-            </div>    
+            <div *ngIf="creditSupport" class="row valign-wrapper" [style.background]="creditColor" (click)="selectPaymentType(1)">
+                <div class="col s1"></div>
+                <div class="col s3">
+                    <img height="60px;" src="dist/app/images/utilities_grey.png" />
+                </div>
+                <div class="col s8" align="center">
+                    <span style="font-size: 18px;">
+                        <b>Credit Card</b>
+                    </span>
+                </div>    
+            </div>
+            <div *ngIf="debitSupport" class="row valign-wrapper" [style.background]="debitColor" (click)="selectPaymentType(2)">
+                <div class="col s1"></div>
+                <div class="col s3">
+                    <img height="60px;" src="dist/app/images/utilities_grey.png" />        
+                </div>
+                <div class="col s8" align="center">
+                    <span style="font-size: 18px;">
+                        <b>Debit Card</b>
+                    </span>
+                </div>    
+            </div>
         </div>
     </div>
 </main>
-<footer style="background-color: #FE2521;" class="page-footer" align="center">
-    <actionbar [nextRoute] = "nextRoute" [action] = "action"></actionbar>
+<footer [style.background] = "merchant && paymentForm.form.valid ? '#FE2521' : '#E2E1DD'" class="page-footer" align="center">
+    <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
+        [invalidForm]="!merchant || !paymentForm.form.valid"></actionbar>
 </footer>

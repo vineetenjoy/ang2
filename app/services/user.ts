@@ -11,51 +11,110 @@ export class UserService {
   private _uname: string;
   private _baseURL: string;
   private _user: User;  
-  private _headers: Headers;
 
   constructor(private http: Http, private utilsService: UtilsService) {
     this._baseURL = this.utilsService.getBaseURL();
-    this._uname = this.utilsService.getUName();
-    this._headers = this.utilsService.getHeaders();
-    this._user = new User(this._uname, null, null, null, null, null, null, null, null);
   }
 
-  getUser() {
+  isLoggedIn(): Promise<User> {
+    //DUMMY AS OF NOW
+    return this.http
+      .post(this._baseURL + 'payments/registration/checkWebUserId', JSON.stringify({ "username": this._user.id.toString() }), 
+        { headers: this.utilsService.getHeaders() })
+      .toPromise()
+      .then(res => this.fillUser(res.json()))
+      .catch(res => null);
+  }
+
+  fillUser(res: any) {
+    //TODO: handle errors here, for null return empty user.
     return this._user;
+  }
+
+  getUser(): Promise<User> {
+    if(!this._user) {
+      if(this.utilsService.hasToken()) {
+        this._user = new User(this.utilsService.getUName(), null, null, null, null, null, null, null, null, null);
+        this.isLoggedIn().then(res => this._user)
+      }
+      else
+        this._user = new User(null, null, null, null, null, null, null, null, null, null);
+    }
+
+    return Promise.resolve(this._user);
   }
 
   setUser(usr:User) {
     this._user = usr;
   }
 
-  isRegisteredToPFest(): Promise<boolean> {
-    //DUMMY AS OF NOW
-    return this.http
-      .post(this._baseURL + 'payments/registration/checkWebUserId', JSON.stringify({ "username": this._uname }), 
-        { headers: this._headers })
-      .toPromise()
-      .then(res => this._user.powaiFestRegister)
-      .catch(res => this._user.powaiFestRegister);    
+  fillRegistrationDetails(user: User, res: any): User {
+    if(!user || !res)
+      return null;
+
+    user.email = res.email;
+    user.address = res.address;
+    user.powaiFestRegister = res.isRegistered;
+    if(user.powaiFestRegister) {
+      user.numSeats = res.noOfSeatsBooked;
+      if(user.numSeats > 0)
+        user.bollywoodRegister = true;
+    }
+
+    this._user = user;
+    return user;
   }
 
-  isLoggedIn(): Promise<boolean> {
-    //DUMMY AS OF NOW
+  getPFRegistrationDetails(user: User): Promise<User> {
     return this.http
-      .post(this._baseURL + 'payments/registration/checkWebUserId', JSON.stringify({ "username": this._uname }), 
-        { headers: this._headers })
+      .post(this._baseURL + 'payments/registration/checWebkUserRegForEvent', 
+        JSON.stringify({ "username": user.id.toString(), "eventId": 1 }), 
+        { headers: this.utilsService.getHeaders() })
       .toPromise()
-      .then(res => this._user.id ? true : false)
-      .catch(res => this._user.id ? true : false);
+      .then(res => this.fillRegistrationDetails(user, res.json()))
+      .catch(res => null);    
   }
 
-  registerForPowaiFest(usr: User): Promise<boolean> {
-    //DUMMY AS OF NOW
-    this._user.powaiFestRegister = true;
+  getAvailableSeats(res: any): number {
+    if(!res || res.noOfAvailableSeats == undefined)
+      return null;
+
+    return res.noOfAvailableSeats;
+  }
+
+  numAvailableSeatsInPF(): Promise<number> {
     return this.http
-      .post(this._baseURL + 'payments/registration/checkWebUserId', JSON.stringify({ "username": this._uname }), 
-        { headers: this._headers })
+      .post(this._baseURL + 'payments/registration/fecthWebNoOfAvailableSeats', 
+        JSON.stringify({ "eventId": 1 }), { headers: this.utilsService.getHeaders() })
       .toPromise()
-      .then(res => this._user.powaiFestRegister)
-      .catch(res => this._user.powaiFestRegister);    
+      .then(res => this.getAvailableSeats(res.json()))
+      .catch(res => null);    
+  }
+
+  registrationOutput(usr: User, res: any): User {
+    usr.powaiFestRegister = true;
+    usr.numSeats = res.noOfSeats;
+    if(usr.numSeats > 0)
+      usr.bollywoodRegister = true;
+
+    this._user = usr;
+    return usr;
+  }
+
+  registerForPowaiFest(usr: User): Promise<User> {
+    this._user.numSeatsRequested = +this._user.numSeats;
+    let reqObj = { 
+          "username": this._user.id.toString(),
+          "email": this._user.email,
+          "address": this._user.address,
+          "eventId": 1,
+          "noOfSeats": this._user.numSeats
+        };
+
+    return this.http
+      .post(this._baseURL + 'payments/registration/updateWebUserEventDtl', JSON.stringify(reqObj), { headers: this.utilsService.getHeaders() })
+      .toPromise()
+      .then(res => this.registrationOutput(usr, res.json()))
+      .catch(res => null);
   }
 }

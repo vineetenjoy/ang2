@@ -24,7 +24,12 @@ export class OTPErrorComponent  {
   constructor(private router: Router, private userService: UserService) { };
 
   ngOnInit() {
-    this.user = this.userService.getUser();
+     this.userService.getUser()
+      .then(res => this.init(res))
+  }
+
+  init(usr: User) {
+    this.user = usr;
     if(!this.user || !this.user.phone || !this.user.firstName || !this.user.lastName)
       this.router.navigateByUrl('signup');
   }

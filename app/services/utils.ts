@@ -8,6 +8,10 @@ export class UtilsService {
   private _baseURL: string = 'http://52.7.181.77:8080/';
 
   constructor() {
+    this.refreshHeader();
+  }
+
+  refreshHeader() {
     let beNOWut = JSON.parse(localStorage.getItem('beNOWut'));
     if(beNOWut && beNOWut.token && beNOWut.username) {
       this._uname = beNOWut.username.toString();
@@ -16,6 +20,12 @@ export class UtilsService {
         'Authorization': 'Bearer ' + beNOWut.token
       });
     }
+    else {
+      this._uname = '';
+      this._headers = new Headers({
+        'Content-Type': 'application/json'
+      });      
+    }    
   }
 
   hasToken(): boolean {

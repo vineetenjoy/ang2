@@ -69,10 +69,15 @@ export class MerchantsComponent  {
   }
 
   ngOnInit() {
-    this.user = this.userService.getUser();
-    if(!this.user || !this.user.id)
-      this.router.navigateByUrl('signup');
+    this.userService.getUser()
+      .then(res => this.init(res))
+  }
+
+  init(usr: User) {
+    if(!usr || !usr.id)
+        this.router.navigateByUrl('signup');
     else {
+      this.user = usr;
       this.merchantsService.resetSearches();
       this.route.params
         .switchMap((params: Params) => this.merchantsService.getMerchants(params['search'], +params['page'], this.user))

@@ -13,7 +13,9 @@ import { UserService } from './../../services/user';
 export class PowaiFestComponent  {
   user: User;
   submit: boolean = true;
+  loaded: boolean = false;
   showBack: boolean = true;
+  availableSeats: number;
   action: string = "Register";
   backRoute: string = "/home";
   nextRoute: string = "";
@@ -29,7 +31,7 @@ export class PowaiFestComponent  {
       .then(success => this.act(success))
   }
 
-  act(success: boolean) {
+  act(success: User) {
     if(success) {
       this.userService.setUser(this.user);
       this.router.navigateByUrl('/registered');
@@ -40,11 +42,41 @@ export class PowaiFestComponent  {
     }
   }
 
-  ngOnInit() {
-    this.user = this.userService.getUser();
-    if(!this.user || !this.user.id)
-      this.router.navigateByUrl('signup');
-    else if(!this.user.powaiFestRegister)
+  showBNRegistration(availability: number) {
+    this.availableSeats = availability;
+    this.loaded = true;
+  }
+
+  init(usr: User) {
+    if(!usr) {
       this.user.numSeats = 1;
+    }
+    else {
+      this.user = usr;
+      if(!this.user.powaiFestRegister && !this.user.numSeats)
+        this.user.numSeats = 1;
+    }
+
+    if(!this.user.powaiFestRegister)
+      this.userService.numAvailableSeatsInPF()
+        .then(res => this.showBNRegistration(res))
+    else
+      this.loaded = true;
+  }
+
+  ngOnInit() {
+    this.userService.getUser()
+      .then(res => this.initialize(res))
+  }
+
+  initialize(usr: User) {
+    this.user = usr;
+    if(!this.user || !this.user.id)
+      this.router.navigateByUrl('/signup');
+    else if(!this.user.powaiFestRegister)
+      this.userService.getPFRegistrationDetails(this.user)
+        .then(res => this.init(res))
+    else
+      this.loaded = true;
   }
 }

@@ -8,5 +8,6 @@ export class User {
     public address: string,
     public powaiFestRegister: boolean,
     public bollywoodRegister: boolean,
-    public numSeats: number) { }
+    public numSeats: number,
+    public numSeatsRequested: number) { }
 }
