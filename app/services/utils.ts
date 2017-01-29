@@ -6,6 +6,7 @@ export class UtilsService {
   private _uname: string;
   private _headers: Headers;
   private _baseURL: string = 'http://52.7.181.77:8080/';
+  private _processPaymentURL: string = 'http://localhost:9090/benow/processPayment';
 
   constructor() {
     this.refreshHeader();
@@ -37,6 +38,10 @@ export class UtilsService {
 
   getBaseURL(): string {
     return this._baseURL;
+  }
+
+  getProcessPaymentURL(): string {
+    return this._processPaymentURL;
   }
 
   getHeaders(): Headers {

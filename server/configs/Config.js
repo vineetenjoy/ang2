@@ -25,6 +25,14 @@ var config = {
 		key: '',
 		certificate: '',
 	},//For dev.
+	paymentGateway: {
+		url: 'https://test.payu.in/_payment',
+		furl: 'http://localhost:9090/#/paymentcallback',
+		curl: '',
+		surl: 'http://localhost:9090/#/paymentcallback',
+		key: 'BxGvnf',
+		salt: 'E1fQBYzM'		
+	},
     env:'dev' // When doing development
 	//env:'prod''
 };

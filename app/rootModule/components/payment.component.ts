@@ -20,6 +20,7 @@ export class PaymentComponent  {
   initials: string;
   debitColor: string;
   creditColor: string;
+  processPaymentURL: string;
   user: User;
   merchant: Merchant;
   submit: boolean = true;
@@ -38,6 +39,7 @@ export class PaymentComponent  {
     private merchantsService: MerchantsService, private utilsService: UtilsService, private userService: UserService) { 
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
+    this.processPaymentURL = this.utilsService.getProcessPaymentURL();
   };
 
   //This is due to absense of API to validate token and return user details.
@@ -50,12 +52,6 @@ export class PaymentComponent  {
 
     if(!this.user.phone)
       this.user.phone = '9767843495';
-
-    if(!this.user.email)
-      this.user.email = '';
-
-    if(!this.merchant.displayName)
-      this.merchant.displayName = '';
   }
 
   isValidForm() {

@@ -1,15 +1,17 @@
 var crypto = require('crypto');
 var uuid = require('node-uuid');
-var request = require('request'); 
+var request = require('request');
+
+var  config = require('./../configs/Config');
 
 var benowCont = {
 	processPayment:function(req,res){
-        var curl = "";
-        var key="BxGvnf";
-        var salt="E1fQBYzM";
-        var surl="https://www.google.co.in/";
-        var furl = "https://www.facebook.com/";
-        var url="https://test.payu.in/_payment";
+        var url = config.paymentGateway.url;
+        var key = config.paymentGateway.key;
+        var curl = config.paymentGateway.curl;
+        var salt = config.paymentGateway.salt;
+        var surl = config.paymentGateway.surl;
+        var furl = config.paymentGateway.furl;
 
         var cat = req.body.paytype;
         var drop_cat = 'DC,NB,EMI,CASH';
@@ -24,12 +26,12 @@ var benowCont = {
         payload.ismobileview = 1;
         payload.txnid = uuid.v4();
         payload.drop_category = drop_cat;
-        payload.email = req.body.email;
         payload.phone = req.body.phone;
         payload.amount = req.body.payamount;
         payload.lastname = req.body.lastname;
         payload.firstname = req.body.firstname;
         payload.productinfo = req.body.productinfo;
+        payload.email = req.body.email ? req.body.email : req.body.phone;
 
         var text = payload.key + "|" + payload.txnid + "|" + payload.amount + "|" + payload.productinfo + "|" + 
             payload.firstname + "|" + payload.email + "|||||||||||" + salt;
