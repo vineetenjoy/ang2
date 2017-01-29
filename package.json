@@ -1,7 +1,7 @@
 {
-  "name": "shala",
+  "name": "benow",
   "version": "0.0.0",
-  "description": "Starting on education platform for both teachers and students.",
+  "description": "Roz ka fayda.",
   "main": "server.js",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"node server\" ",
@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
-  "author": "Yatish",
+  "author": "BENOW",
   "license": "ISC",
   "private": true,
   "dependencies": {
@@ -50,6 +50,7 @@
     "angular2-materialize": "^6.3.0",
     "canonical-path": "0.0.2",
     "concurrently": "^3.1.0",
+    "crypto": "0.0.3",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-rimraf": "^0.2.1",
@@ -59,6 +60,7 @@
     "jquery": "^2.2.4",
     "lodash": "^4.16.4",
     "materialize-css": "^0.97.8",
+    "request": "^2.79.0",
     "run-sequence": "^1.2.2",
     "ts-node": "^0.5.5",
     "tslint": "^3.15.1",

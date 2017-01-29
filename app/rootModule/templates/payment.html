@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
+<form #paymentForm ngNoForm action='http://localhost:9090/benow/processPayment' method='POST'>
 <header>
     <nav class="nav-extended" style="font-family: 'Roboto Condensed'; background-color: #FE2521;">
         <div class="nav-wrapper">        
@@ -120,7 +120,14 @@
         </div>
     </div>
 </main>
-<footer [style.background] = "merchant && paymentForm.form.valid ? '#FE2521' : '#E2E1DD'" class="page-footer" align="center">
+<footer *ngIf="user && merchant" [style.background] = "isValidForm() ? '#FE2521' : '#E2E1DD'" class="page-footer" align="center">
+    <input type="hidden" name="email" [ngModel]="user.email" />
+    <input type="hidden" name="phone" [ngModel]="user.phone" />
+    <input type="hidden" name="lastname" [ngModel]="user.lastName" />
+    <input type="hidden" name="firstname" [ngModel]="user.firstName" />
+    <input type="hidden" name="productinfo" [ngModel]="merchant.displayName" />
+    <input type="hidden" name="payamount" [ngModel]="amount" />
+    <input type="hidden" name="paytype" [ngModel]="paymentType" />
     <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
-        [invalidForm]="!merchant || !paymentForm.form.valid"></actionbar>
+        [invalidForm]="!merchant || !isValidForm()"></actionbar>
 </footer>

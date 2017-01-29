@@ -22,16 +22,16 @@ export class PaymentComponent  {
   creditColor: string;
   user: User;
   merchant: Merchant;
-  submit: boolean = false;
+  submit: boolean = true;
   debitSupport: boolean = false;
   creditSupport: boolean = false;
   amount: number = 0.00;
   debitType: number = 2;
   creditType: number = 1;
+  nextRoute: string = "";
   action: string = "Pay Now";
   title: string = "Secure Payment";
   selectedColor: string = '#FFF496';
-  nextRoute: string = "/paymentcallback";
   unselectedColor: string = 'transparent';
 
   constructor(private route: ActivatedRoute, private paymentService: PaymentService, private router: Router, 
@@ -39,6 +39,28 @@ export class PaymentComponent  {
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
   };
+
+  //This is due to absense of API to validate token and return user details.
+  TEMPCORRECTDATA() {
+    if(!this.user.firstName)
+      this.user.firstName = 'Yatish';
+
+    if(!this.user.lastName)
+      this.user.lastName = 'Gupta';
+
+    if(!this.user.phone)
+      this.user.phone = '9767843495';
+
+    if(!this.user.email)
+      this.user.email = '';
+
+    if(!this.merchant.displayName)
+      this.merchant.displayName = '';
+  }
+
+  isValidForm() {
+    return this.amount > 0 && (this.paymentType == this.debitType || this.paymentType == this.creditType);
+  }
 
   back() {
     this.router.navigateByUrl(this.merchantsService.getLastRoute());    
@@ -94,6 +116,9 @@ export class PaymentComponent  {
             this.debitColor = this.selectedColor;        
           }
         }
+
+        //This is due to absense of API to validate token and return user details.
+        this.TEMPCORRECTDATA();
       }
       else
         this.router.navigateByUrl('/merchants/0');

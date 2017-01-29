@@ -1,21 +1,30 @@
 // Config class.
 var config = {
-    configSalt: 'TLYatish',
     mongoConfig:{
-		'projectUrl':'mongodb://localhost:27017/taskLance',
-		'userCollectionName':'tlUsers',
+		'projectUrl':'',
+		'userCollectionName':'',
 	},
 	logger : {
 		logDir : __dirname + '/../server/log/',
 		logFileName : __dirname + '/../server/log/app.log'
 	},
 	emailSettings:{
-		userid: 'mail@geektree.in',
-		password: 'G@@ktree',
-		server: 'smtp.gmail.com',
-		subject: 'Test Email',
-		fromEmail: 'SEED Dashboard Subscription<mail@geektree.in>'
-	},
+		userid: '',
+		password: '',
+		server: '',
+		subject: '',
+		fromEmail: ''
+	}/*,
+	ssl: {
+		active: true,
+		key: 'server.key',
+		certificate: 'server.cert',
+	}*/,//For Prod.
+	ssl: {
+		active: false,
+		key: '',
+		certificate: '',
+	},//For dev.
     env:'dev' // When doing development
 	//env:'prod''
 };

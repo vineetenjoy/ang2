@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var fs = require('fs');
 
 // Class inclusions.
 var auth = require('./server/auths/Auth');
@@ -14,7 +15,16 @@ var logger = require('./server/utils/Logger');
 var config = require('./server/configs/Config');
 var sTask = require('./server/utils/StartupTask');
 var cUtils = require('./server/utils/CommonUtils');
-var taskRouter = require('./server/routers/TaskRouter');
+var benowRouter = require('./server/routers/BenowRouter');
+
+function setup (ssl) {
+   if (ssl && ssl.active) {
+      return {
+         key  : fs.readFileSync(ssl.key),
+         cert : fs.readFileSync(ssl.certificate)
+      };
+   }
+}
 
 // Initializations.
 var env = config.env;
@@ -52,9 +62,9 @@ app.use(auth.passport.session());
 app.use('/', express.static(__dirname + urls.distDir));
 app.use('/dist', express.static(__dirname + urls.distDir));
 app.use('/node_modules', express.static(__dirname + urls.extLibsDir));
-app.use('/app', [taskRouter.isAuthenticated, express.static(__dirname + urls.appDir)]);
+app.use('/benow', benowRouter);
 app.use('/fav',express.static(__dirname + urls.favicon))
-app.use('/taskApi', taskRouter);
+
 app.get('/', function(req, res) {
 	res.redirect(urls.home);
 });
@@ -68,6 +78,17 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-app.listen(config.port);
+function start (app, options) {
+   if (options) {
+	  console.log('starting https');
+      return require('https').createServer(options, app);
+   }
+
+   console.log('starting http');
+   return require('http').createServer(app);
+}
+
+var options = setup(config.ssl);
+start(app, options).listen(config.port);
+
 sTask.migrate();
-console.log(msgs.portMsg + config.port);
