@@ -19,11 +19,11 @@ export class UserService {
         { headers: this.utilsService.getHeaders() })
       .toPromise()
       .then(res => this.fillUser(res.json()))
-      .catch(res => null);
+      .catch(res => new User(null, null, null, null, null, null, null, null, null, null));
   }
 
   fillUser(res: any) {
-    if(res) {
+    if(res && res.success !== false) {
       this._user.phone = res.mobileNumber;
       this._user.email = res.email;
       if(res.fullName) {
@@ -62,7 +62,7 @@ export class UserService {
   }
 
   fillRegistrationDetails(user: User, res: any): User {
-    if(!user || !res)
+    if(!user || !res || res.success === false)
       return null;
 
     user.email = res.email;
@@ -105,6 +105,9 @@ export class UserService {
   }
 
   registrationOutput(usr: User, res: any): User {
+    if(!res || res.success === false)
+      return null;
+      
     usr.powaiFestRegister = true;
     usr.numSeats = res.noOfSeats;
     if(usr.numSeats > 0)

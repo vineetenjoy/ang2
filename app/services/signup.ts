@@ -15,8 +15,15 @@ export class SignUpService {
             .post(this.utilsService.getSendOTPURL(), JSON.stringify({ "mobileNumber": phone }), 
               { headers: this.utilsService.getHeaders() })
             .toPromise()
-            .then(res => res.json().responseFromAPI)
+            .then(res => this.sentOtp(res.json()))
             .catch(res => false);
+  }
+
+  sentOtp(res: any): boolean {
+    if(!res || res.success === false)
+      return false;
+    
+    return res.responseFromAPI;
   }
 
   validateUser(user:User, otp:string): Promise<string> {

@@ -13,14 +13,17 @@ var benowCont = {
                 buffer += chunk;
             });
             res.on('end', function (err) {
-                cb(JSON.parse(buffer));
-            }); 
+                if(res.statusCode === 200)
+                    cb(JSON.parse(buffer));
+                else
+                    cb({'success': false, 'status': res.statusCode});
+            });
         });
 
         reqPost.write(JSON.stringify(obj));
         reqPost.end();
         reqPost.on('error', function(e) {
-            cb(e);
+            cb({'error': e});
         });
     },
 

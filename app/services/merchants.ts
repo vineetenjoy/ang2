@@ -70,6 +70,9 @@ export class MerchantsService {
   }
 
   fillMerchants(res: any): Merchant[] {
+    if(!res || res.success === false)
+      return null;
+
     let dbMerchants = res.merchantDetailsList;
     this._totalPages = res.totalNoOfPages;
     let merchants: Merchant[] = new Array();
