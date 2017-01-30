@@ -16,6 +16,7 @@ export class SignUpComponent  {
   user: User;
   submit: boolean = true;
   loaded: boolean = false;
+  useLogo: boolean = false;
   showBack: boolean = false;
   action: string = "Next";
   backRoute: string = "";

@@ -16,6 +16,7 @@ export class OTPComponent  {
   otp: string;
   user: User;  
   submit: boolean = true;
+  useLogo: boolean = true;  
   showBack: boolean = true;
   action: string = "verify";
   backRoute: string = "/signup";
@@ -53,7 +54,8 @@ export class OTPComponent  {
     else if(result && result.validationErrors) 
       this.router.navigateByUrl('/otperror');
     else
-      this.router.navigateByUrl('/error/2');
+      this.router.navigateByUrl('/otperror');
+/*      this.router.navigateByUrl('/error/2');*/
   }
 
   ngOnInit() {

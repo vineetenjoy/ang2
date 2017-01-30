@@ -1,17 +1,21 @@
-<nav class="nav-extended" style="font-family: 'Roboto Condensed'; background-color: #FE2521;">
+<!--<div style="height: 20px; width: 100%; background-color: #B72127;">&nbsp;</div>-->
+<nav class="nav" style="font-family: 'Fjalla One', sans-serif; color: #ffffff;  background-color: #E53935;">
     <div class="nav-wrapper">        
-        <div class="brand-logo center">
+        <div *ngIf="!useLogo" style="font-size: 18pt;" class="brand-logo center">
+            {{title}}
+        </div>
+        <div *ngIf="useLogo" class="brand-logo center">
             <a href="javascript:void(0)">
-                <img src="/app/images/benow.png" style="max-height: 64px; width: auto;"/>
+                <img src="/app/images/benow2x.png" style="max-height: 64px; width: auto;"/>
             </a>
         </div>
-        <ul class="right">
+        <ul *ngIf="!showBack" class="right">
             <li>&nbsp;</li>
         </ul>
-        <i class="left material-icons" *ngIf="showBack" style="margin-left:-50px;" [routerLink]="backRoute">ic_arrow_back</i>
-        <ul class="tabs tabs-transparent">
-            <li class="tab">
-                <a href="javascript:void(0)" style="color: white; text-transform: none; font-size: 22px;">{{title}}</a>
+        <ul *ngIf="showBack" class="left">
+            <li>
+                <i class="left material-icons" [routerLink]="backRoute">navigate_before</i>
+<!--                <img src="/app/images/benow1x.png" />-->
             </li>
         </ul>
     </div>

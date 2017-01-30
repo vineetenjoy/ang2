@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './../templates/topnav.html'
 })
 export class TopNavComponent  {
+  @Input('useLogo') useLogo: boolean;
   @Input('showBack') showBack: boolean;
   @Input('title') title: string;
   @Input('backRoute') backRoute: string;
