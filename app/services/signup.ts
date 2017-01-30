@@ -8,17 +8,12 @@ import { UtilsService } from './utils';
 
 @Injectable()
 export class SignUpService {
-  private _baseURL: string;
-  private _headers = new Headers({'Content-Type': 'application/json'});
-
-  constructor(private http: Http, private utilsService: UtilsService) { 
-    this._baseURL = this.utilsService.getBaseURL();
-  }
+  constructor(private http: Http, private utilsService: UtilsService) {  }
 
   sendOTP(phone: string): Promise<boolean> {
     return this.http
-            .post(this._baseURL + 'payments/registration/sendWebOTP', JSON.stringify({ "mobileNumber": phone }), 
-              { headers: this._headers })
+            .post(this.utilsService.getSendOTPURL(), JSON.stringify({ "mobileNumber": phone }), 
+              { headers: this.utilsService.getHeaders() })
             .toPromise()
             .then(res => res.json().responseFromAPI)
             .catch(res => false);
@@ -38,8 +33,8 @@ export class SignUpService {
                   };
                         
       return this.http
-              .post(this._baseURL + 'payments/registration/registerWebBenowUser', JSON.stringify(obj), 
-                { headers: this._headers })
+              .post(this.utilsService.getSignUpURL(), JSON.stringify(obj), 
+                { headers: this.utilsService.getHeaders() })
               .toPromise()
               .then(res => JSON.stringify(res.json()))
               .catch(res => JSON.stringify(res.json()));

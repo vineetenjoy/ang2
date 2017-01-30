@@ -33,6 +33,10 @@ var config = {
 		key: 'BxGvnf',
 		salt: 'E1fQBYzM'		
 	},
+	beNowSvc: {
+		host: '52.7.181.77',
+        port: '8080',
+	},
     env:'dev' // When doing development
 	//env:'prod''
 };

@@ -9,17 +9,13 @@ import { UtilsService } from './utils';
 @Injectable()
 export class UserService {
   private _uname: string;
-  private _baseURL: string;
   private _user: User;  
 
-  constructor(private http: Http, private utilsService: UtilsService) {
-    this._baseURL = this.utilsService.getBaseURL();
-  }
+  constructor(private http: Http, private utilsService: UtilsService) {  }
 
   isLoggedIn(): Promise<User> {
-    //DUMMY AS OF NOW
     return this.http
-      .post(this._baseURL + 'payments/registration/checkWebUserId', JSON.stringify({ "username": this._user.id.toString() }), 
+      .post(this.utilsService.getValidateUserURL(), JSON.stringify({ "username": this._user.id.toString() }), 
         { headers: this.utilsService.getHeaders() })
       .toPromise()
       .then(res => this.fillUser(res.json()))
@@ -27,7 +23,24 @@ export class UserService {
   }
 
   fillUser(res: any) {
-    //TODO: handle errors here, for null return empty user.
+    if(res) {
+      this._user.phone = res.mobileNumber;
+      this._user.email = res.email;
+      if(res.fullName) {
+        let n = res.fullName.split(' ');
+        if(n.length > 1) {
+          this._user.lastName = n[n.length - 1];
+          this._user.firstName = res.fullName.substring(0, res.fullName.length - this._user.lastName.length - 1);
+        }
+        else {
+          this._user.firstName = res.fullName;
+          this._user.lastName = '';
+        }
+      }
+    }
+    else
+      return new User(null, null, null, null, null, null, null, null, null, null);
+
     return this._user;
   }
 
@@ -67,7 +80,7 @@ export class UserService {
 
   getPFRegistrationDetails(user: User): Promise<User> {
     return this.http
-      .post(this._baseURL + 'payments/registration/checWebkUserRegForEvent', 
+      .post(this.utilsService.getPFRegDetailsURL(), 
         JSON.stringify({ "username": user.id.toString(), "eventId": 1 }), 
         { headers: this.utilsService.getHeaders() })
       .toPromise()
@@ -84,7 +97,7 @@ export class UserService {
 
   numAvailableSeatsInPF(): Promise<number> {
     return this.http
-      .post(this._baseURL + 'payments/registration/fecthWebNoOfAvailableSeats', 
+      .post(this.utilsService.getNumAvailableSeatsURL(), 
         JSON.stringify({ "eventId": 1 }), { headers: this.utilsService.getHeaders() })
       .toPromise()
       .then(res => this.getAvailableSeats(res.json()))
@@ -112,7 +125,7 @@ export class UserService {
         };
 
     return this.http
-      .post(this._baseURL + 'payments/registration/updateWebUserEventDtl', JSON.stringify(reqObj), { headers: this.utilsService.getHeaders() })
+      .post(this.utilsService.getRegisterInPowaiFestURL(), JSON.stringify(reqObj), { headers: this.utilsService.getHeaders() })
       .toPromise()
       .then(res => this.registrationOutput(usr, res.json()))
       .catch(res => null);

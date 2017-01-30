@@ -13,14 +13,10 @@ export class MerchantsService {
   private _curPage: number;
   private _totalPages: number;
   private _term: string;
-  private _baseURL: string;
-  private _headers: Headers;
   private _searches: string[];
   private _merchants: Merchant[];
 
   constructor(private http: Http, private utilsService: UtilsService) {
-    this._baseURL = this.utilsService.getBaseURL();
-    this._headers = this.utilsService.getHeaders();
     this._searches = new Array();
   }
 
@@ -118,16 +114,16 @@ export class MerchantsService {
     this.pushInSearches('/merchants/' + page.toString() + ';search=' + search);
     let searchObj = {
       "emailAddress": user.id.toString(),
-      "lattitude":"0.0",
-      "longitude":"0.0",
-      "pageNumber":page,
-      "sortingOrder":"ASC"
+      "lattitude": "0.0",
+      "longitude": "0.0",
+      "pageNumber": page,
+      "sortingOrder": "ASC"
     };
 
-    let url = this._baseURL + 'payments/merchantpayment/listWebMerchants';
+    let url = this.utilsService.getListMerchantsURL();
     if(search) {
       searchObj["searchParam"] = search
-      url = this._baseURL + 'payments/merchantpayment/searchWebMerchants';
+      url = this.utilsService.getSearchMerchantsURL();
     }
 
     return this.listMerchants(searchObj, url);
@@ -135,7 +131,7 @@ export class MerchantsService {
 
   listMerchants(searchObj: any, url: string): Promise<Merchant[]> {
     return this.http
-      .post(url, JSON.stringify(searchObj), { headers: this._headers })
+      .post(url, JSON.stringify(searchObj), { headers: this.utilsService.getHeaders() })
       .toPromise()
       .then(res => this.fillMerchants(res.json()))
       .catch(res => null);    
