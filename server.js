@@ -64,8 +64,13 @@ app.use('/dist', express.static(__dirname + urls.distDir));
 app.use('/node_modules', express.static(__dirname + urls.extLibsDir));
 app.use('/benow', benowRouter);
 app.use('/fav',express.static(__dirname + urls.favicon))
+/*app.use('/powaifest17', express.static(__dirname + urls.distDir));*/
 
 app.get('/', function(req, res) {
+	res.redirect(urls.home);
+});
+
+app.get('/powaifest17', function(req, res) {
 	res.redirect(urls.home);
 });
 
