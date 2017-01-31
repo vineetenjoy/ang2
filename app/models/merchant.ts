@@ -1,6 +1,7 @@
 export class Merchant {
   constructor(
     public merchantId: string,
+    public merchantCode: string,
     public displayName: string,
     public category: string,
     public locality: string,

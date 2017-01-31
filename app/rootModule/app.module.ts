@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import {APP_BASE_HREF} from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,7 +24,6 @@ import { PaymentCallbackComponent } from './components/paymentcallback.component
 import { UserService } from './../services/user';
 import { UtilsService } from './../services/utils';
 import { SignUpService } from './../services/signup';
-import { PaymentService } from './../services/payment';
 import { MerchantsService } from './../services/merchants';
 
 @NgModule({
@@ -37,7 +37,7 @@ import { MerchantsService } from './../services/merchants';
       component: ErrorComponent
     },
     {
-      path: 'payment/:merchantId/:color',
+      path: 'payment/:merchantCode/:color',
       component: PaymentComponent
     },
     {
@@ -83,7 +83,8 @@ import { MerchantsService } from './../services/merchants';
     OTPErrorComponent, PowaiFestComponent, MaterializeDirective, ActionBarComponent,
     HomeComponent, MerchantsComponent, RegisteredComponent, PaymentComponent,
     PaymentCallbackComponent, MerchantComponent, ErrorComponent ],
-  providers: [UtilsService, SignUpService, MerchantsService, UserService, PaymentService],
+  providers: [UtilsService, SignUpService, MerchantsService, UserService/*,
+    {provide: APP_BASE_HREF, useValue: 'powaifest17'}*/],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

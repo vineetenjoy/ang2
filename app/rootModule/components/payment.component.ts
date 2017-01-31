@@ -6,7 +6,6 @@ import { Merchant } from './../../models/merchant';
 
 import { UserService } from './../../services/user';
 import { UtilsService } from './../../services/utils';
-import { PaymentService } from './../../services/payment';
 import { MerchantsService } from './../../services/merchants';
 
 @Component({
@@ -36,34 +35,23 @@ export class PaymentComponent  {
   selectedColor: string = '#E2E1DD';
   unselectedColor: string = 'transparent';
 
-  constructor(private route: ActivatedRoute, private paymentService: PaymentService, private router: Router, 
+  constructor(private route: ActivatedRoute, private router: Router, 
     private merchantsService: MerchantsService, private utilsService: UtilsService, private userService: UserService) { 
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
     this.processPaymentURL = this.utilsService.getProcessPaymentURL();
   };
 
-  //This is due to absense of API to validate token and return user details.
-  TEMPCORRECTDATA() {
-    if(!this.user.firstName)
-      this.user.firstName = 'Yatish';
-
-    if(!this.user.lastName)
-      this.user.lastName = 'Gupta';
-
-    if(!this.user.phone)
-      this.user.phone = '9767843495';
-  }
-
   isValidForm() {
     return this.amount > 0 && (this.paymentType == this.debitType || this.paymentType == this.creditType);
   }
 
   back() {
-    this.router.navigateByUrl(this.merchantsService.getLastRoute());    
+    let r = this.merchantsService.getLastRoute();
+    this.router.navigateByUrl(r ? r : '/merchants/0;search=');    
   }
 
-  selectPaymentType(pType:number) {
+selectPaymentType(pType:number) {
     this.paymentType = pType;
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
@@ -71,14 +59,14 @@ export class PaymentComponent  {
       this.creditColor = this.selectedColor;
     else if (pType === this.debitType)
       this.debitColor = this.selectedColor;
-
-    this.paymentService.setPaymentDetails(this.amount, this.merchant.displayName, 
-      '/payment/' + this.merchant.merchantId + '/' + this.color);
-  }
+  }  
 
   ngOnInit() {
-    this.userService.getUser()
-      .then(res => this.init(res))    
+    if(this.merchantsService.getLastRoute())
+      this.userService.getUser()
+        .then(res => this.init(res))
+    else
+      this.router.navigateByUrl('/merchants/0;search='); 
   }
 
   init(usr: User) {
@@ -86,9 +74,9 @@ export class PaymentComponent  {
     if(!this.user || !this.user.id)
       this.router.navigateByUrl('signup');
     else {
-      let merchantId = this.route.snapshot.params['merchantId'];
+      let merchantCode = this.route.snapshot.params['merchantCode'];
       this.color = '#' + this.route.snapshot.params['color'];
-      this.merchant = this.merchantsService.getMerchant(merchantId);
+      this.merchant = this.merchantsService.getMerchantByCode(merchantCode);
       if(this.merchant) {
         if(this.merchant.displayName)
           this.initials = this.utilsService.getInitials(this.merchant.displayName);
@@ -113,9 +101,6 @@ export class PaymentComponent  {
             this.debitColor = this.selectedColor;        
           }
         }
-
-        //This is due to absense of API to validate token and return user details.
-        this.TEMPCORRECTDATA();
       }
       else
         this.router.navigateByUrl('/merchants/0');

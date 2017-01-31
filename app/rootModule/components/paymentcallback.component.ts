@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from './../../models/user';
 
 import { UserService } from './../../services/user'
-import { PaymentService } from './../../services/payment';
 
 @Component({
   moduleId: module.id,
@@ -25,8 +24,7 @@ export class PaymentCallbackComponent  {
   nextRoute: string = "/merchants/0";
   title: string = "Done";
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService,
-    private paymentService: PaymentService) { };
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { };
   
   ngOnInit() {
     this.userService.getUser()
@@ -38,10 +36,10 @@ export class PaymentCallbackComponent  {
         this.router.navigateByUrl('/signup');
     else {
       this.user = usr;
-      let pd = this.paymentService.getPaymentDetails();
+      /*let pd = this.paymentService.getPaymentDetails();
       this.merchant = pd.merchant;
       this.amount = pd.amount;
-      this.backURL = pd.backURL;
+      this.backURL = pd.backURL;*/
 
       if(!this.success) {
         this.action = "Try Again";

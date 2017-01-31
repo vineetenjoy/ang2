@@ -60,6 +60,7 @@ export class MerchantsService {
 
     return new Merchant(
       dbMerchant.merchantId,
+      dbMerchant.merchantCode,
       dbMerchant.displayName,
       dbMerchant.category ? dbMerchant.category : 'Not Categorized',
       dbMerchant.locality ? dbMerchant.locality : 'NA',
@@ -93,8 +94,10 @@ export class MerchantsService {
   getLastRoute() {
     if(this._searches && this._searches.length > 0)
       return this._searches[this._searches.length - 1];
-    else
+    else if(this._merchants)
       return '/merchants/0;search=';
+    else
+      return null;
   }
 
   pushInSearches(srch: string) {
@@ -138,9 +141,13 @@ export class MerchantsService {
       .toPromise()
       .then(res => this.fillMerchants(res.json()))
       .catch(res => null);    
-  }  
+  }
 
-  getMerchant(id:string):Merchant {
+  getMerchantByCode(code: string): Merchant {
+    return this._merchants.find(m => m.merchantCode == code);    
+  }
+
+  getMerchant(id: string): Merchant {
     return this._merchants.find(m => m.merchantId == id);
   }
 }
