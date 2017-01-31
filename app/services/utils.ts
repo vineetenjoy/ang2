@@ -36,36 +36,44 @@ export class UtilsService {
     return this._baseURL + this._processPaymentURL;
   }
 
-  getRegisterInPowaiFestURL() {
+  getRegisterInPowaiFestURL(): string {
     return this._baseURL + this._registerInPowaiFestURL;        
   }
 
-  getNumAvailableSeatsURL() {
+  getNumAvailableSeatsURL(): string {
     return this._baseURL + this._numAvailableSeatsURL;        
   }
 
-  getPFRegDetailsURL() {
+  getPFRegDetailsURL(): string {
     return this._baseURL + this._pFRegDetailsURL;        
   }
 
-  getValidateUserURL() {
+  getValidateUserURL(): string {
     return this._baseURL + this._validateUserURL;        
   }
 
-  getSignUpURL() {
+  getSignUpURL(): string {
     return this._baseURL + this._signUpURL;        
   }
 
-  getSendOTPURL() {
+  getSendOTPURL(): string {
     return this._baseURL + this._sendOTPURL;    
   }
 
-  getListMerchantsURL() {
+  getListMerchantsURL(): string {
     return this._baseURL + this._listMerchantsURL;
   }
 
-  getSearchMerchantsURL() {
+  getSearchMerchantsURL(): string {
     return this._baseURL + this._searchMerchantsURL;
+  }
+
+  getxauth(): string {
+    let beNOWut = JSON.parse(localStorage.getItem('beNOWut'));
+    if(beNOWut && beNOWut.token)
+      return beNOWut.token.toString();
+    
+    return '';
   }
 
   refreshHeader() {

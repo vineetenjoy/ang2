@@ -138,8 +138,11 @@
     <input type="hidden" name="lastname" [ngModel]="user.lastName" />
     <input type="hidden" name="firstname" [ngModel]="user.firstName" />
     <input type="hidden" name="productinfo" [ngModel]="merchant.merchantId" />
+    <input type="hidden" name="merchantcode" [ngModel]="merchant.merchantCode" />
+    <input type="hidden" name="merchantname" [ngModel]="merchant.displayName" />
     <input type="hidden" name="payamount" [ngModel]="amount" />
     <input type="hidden" name="paytype" [ngModel]="paymentType" />
+    <input type="hidden" name="xauth" [ngModel]="xauth" />
     <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
         [invalidForm]="!merchant || !isValidForm()"></actionbar>
 </footer>

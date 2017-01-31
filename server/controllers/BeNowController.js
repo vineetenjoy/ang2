@@ -13,7 +13,7 @@ var benowCont = {
                 buffer += chunk;
             });
             res.on('end', function (err) {
-                if(res.statusCode === 200)
+                if(res.statusCode === 200) 
                     cb(JSON.parse(buffer));
                 else
                     cb({'success': false, 'status': res.statusCode});
@@ -23,7 +23,7 @@ var benowCont = {
         reqPost.write(JSON.stringify(obj));
         reqPost.end();
         reqPost.on('error', function(e) {
-            cb({'error': e});
+            cb({'error': e, 'success': false});
         });
     },
 
@@ -100,15 +100,15 @@ var benowCont = {
     },
 
     initiatePayment: function(req, res) {
-        this.initiatePaymentPost(req, function(data) {
+/*        this.initiatePaymentPost(req, function(data) {
             res.json(data);
-        });
+        });*/
     },
 
     hashPayload: function(req, res) {
-        this.hashPayloadPost(req, function(data) {
+/*        this.hashPayloadPost(req, function(data) {
             res.json(data);
-        });
+        });*/
     },
 
     validateUser: function(req, res) {
@@ -130,29 +130,30 @@ var benowCont = {
         }
     },
 
-    hashPayloadPost: function(req, cb) {
+    hashPayloadPost: function(obj, headers, payload, cb1, cb2, rd) {
         try {
-            this.postAndCallback(this.getExtServerOptions('/payments/paymentadapter/getWebCalculatedHash', req.headers), 
-                {
-                    "amount": req.body.amount,
-                    "email": req.body.email,
-                    "firstName": req.body.firstName,
-                    "furl": req.body.furl,
-                    "merchantKey": req.body.merchantKey,
-                    "productInfo": req.body.productInfo,
-                    "surl": req.body.surl,
-                    "transactionNumber": req.body.transactionNumber,
-                    "udf1": req.body.udf1,
-                    "udf2": req.body.udf2,
-                    "udf3": req.body.udf3,
-                    "udf4": req.body.udf4,
-                    "udf5": req.body.udf5,
-                    "username": req.body.username
-                }, 
-                cb);
+            cb2(cb1('/payments/paymentadapter/getWebCalculatedHash', headers), obj,
+                function(data) {
+                    if(data && data.hash) {
+                        var hp = JSON.parse(data.hash);
+                        payload.hash = hp.payment_hash;            
+                        request.post({ url: config.paymentGateway.url, form: payload}, 
+                            function(err, remoteResponse, remoteBody) {
+                                if (err) {
+                                    //REDIRECT TO PAYMENT FAILURE.
+                                }
+
+                                rd.redirect(remoteResponse.caseless.dict.location);
+                            });
+                    }
+                    else {
+                        //REDIRECT TO PAYMENT FAILURE.
+                    }
+
+                });
         }
         catch(err) {
-            cb(err);
+            //REDIRECT TO PAYMENT FAILURE.
         }
     },
 
@@ -199,37 +200,39 @@ var benowCont = {
         }
     },
 
-    initiatePaymentPost: function(req, cb) {
+    initiatePaymentPost: function(obj, headers, payload, cb, cb1, cb2, rd) {
         try {
-            this.postAndCallback(this.getExtServerOptions('/payments/paymentadapter/initiatePayWebRequest', req.headers),
-                {
-                    "amount": req.body.amount,
-                    "hdrTransRefNumber": req.body.hdrTransRefNumber,
-                    "listPayments": [
-                        {
-                            "paymentDetails": {
-                                "deviceDetails": {
-                                    "applicationName": req.body.listPayments[0].paymentDetails.deviceDetails.applicationName,
-                                    "deviceId": req.body.listPayments[0].paymentDetails.deviceDetails.deviceId,
-                                    "mobileNumber": req.body.listPayments[0].paymentDetails.deviceDetails.mobileNumber
-                                },
-                                "merchantCode": req.body.listPayments[0].paymentDetails.merchantCode,
-                                "merchantName": req.body.listPayments[0].paymentDetails.merchantName,
-                                "payeeVirtualAddress": req.body.listPayments[0].paymentDetails.payeeVirtualAddress,
-                                "payerUsername": req.body.listPayments[0].paymentDetails.payerUsername,
-                                "paymentInvoice": {
-                                    "amountPayable": req.body.listPayments[0].paymentDetails.paymentInvoice.amountPayable
-                                },
-                                "remarks": req.body.listPayments[0].paymentDetails.remarks
-                            },
-                            "paymentMethodType": req.body.listPayments[0].paymentMethodType
-                        }
-                    ]
-                },
-                cb);
+            this.postAndCallback(this.getExtServerOptions('/payments/paymentadapter/initiatePayWebRequest', headers), obj, 
+                function(data) {
+                    //2. Create Hash.
+                    if(data && data.hdrTransRefNumber) {
+                        payload.txnid = data.hdrTransRefNumber;
+                        var obj2 = {
+                            "amount": obj.amount,
+                            "email": payload.email,
+                            "firstName": payload.firstname,
+                            "furl": payload.furl,
+                            "merchantKey": payload.key,
+                            "productInfo": payload.productinfo,
+                            "surl": payload.surl,
+                            "transactionNumber": data.hdrTransRefNumber,
+                            "udf1": "",
+                            "udf2": "",
+                            "udf3": "",
+                            "udf4": "",
+                            "udf5": "",
+                            "username": payload.phone
+                        };
+                        cb(obj2, headers, payload, cb1, cb2, rd);
+                    }
+                    else {
+                        //REDIRECT TO FAILURE PAYMENT.
+                    }
+
+                });
         }
         catch(err) {
-            cb(err);
+            //REDIRECT TO PAYMENT FAILURE.
         }
     },
 
@@ -354,49 +357,66 @@ var benowCont = {
         }
     },
 
-	processPayment:function(req,res) {
+	processPayment:function(req, res) {
         try {
-            var url = config.paymentGateway.url;
-            var key = config.paymentGateway.key;
-            var curl = config.paymentGateway.curl;
-            var salt = config.paymentGateway.salt;
-            var surl = config.paymentGateway.surl;
-            var furl = config.paymentGateway.furl;
+        //1. initiate web payment
+            var obj = {
+                "amount": req.body.payamount,
+                "hdrTransRefNumber": "",
+                "listPayments": [
+                    {
+                        "paymentDetails": {
+                            "deviceDetails": {
+                                "applicationName": "web",
+                                "deviceId": "browser",
+                                "mobileNumber": req.body.phone
+                            },
+                            "merchantCode": req.body.merchantcode,
+                            "merchantName": req.body.merchantname,
+                            "payeeVirtualAddress": "",//What is this?
+                            "payerUsername": req.body.phone,
+                            "paymentInvoice": {
+                                "amountPayable": req.body.payamount
+                            },
+                            "remarks": ""//What should go here?
+                        },
+                        "paymentMethodType": req.body.paytype === 1 ? 'CREDIT_CARD' : 'DEBIT_CARD'
+                    }
+                ]
+            };
 
             var cat = req.body.paytype;
             var drop_cat = 'DC,NB,EMI,CASH';
             if(cat > 1)
                 drop_cat = 'CC,NB,EMI,CASH';
 
-            var payload = {};
-            payload.key = key;
-            payload.curl = curl;
-            payload.surl = surl;
-            payload.furl = furl;
-            payload.ismobileview = 1;
-            payload.txnid = uuid.v4();
-            payload.drop_category = drop_cat;
-            payload.phone = req.body.phone;
-            payload.amount = req.body.payamount;
-            payload.lastname = req.body.lastname;
-            payload.firstname = req.body.firstname;
-            payload.productinfo = req.body.productinfo;
-            payload.email = req.body.email ? req.body.email : req.body.phone;
+            var payload = {
+                "key": config.paymentGateway.key,
+                "curl": config.paymentGateway.curl,
+                "surl": config.paymentGateway.surl,
+                "furl": config.paymentGateway.furl,
+                "ismobileview": 1,
+                "txnid": "",
+                "drop_category": drop_cat,
+                "phone": req.body.phone,
+                "amount": req.body.payamount,
+                "lastname": req.body.lastname,
+                "firstname": req.body.firstname,
+                "productinfo": req.body.productinfo,
+                "email": req.body.email ? req.body.email : ""
+            };
 
-            var text = payload.key + "|" + payload.txnid + "|" + payload.amount + "|" + payload.productinfo + "|" + 
-                payload.firstname + "|" + payload.email + "|||||||||||" + salt;
-            var hash = crypto.createHash('sha512');
-            hash.update(text);
-            payload.hash = hash.digest('hex');
-            
-            request.post({ url: url, form: payload}, function(err, remoteResponse, remoteBody) {
-                if (err)
-                    return res.status(500).end('Error'); 
+            var headers = {
+                'X-AUTHORIZATION': req.body.xauth,
+                'Content-Type': 'application/json'
+            }
 
-                res.redirect(remoteResponse.caseless.dict.location);
-            });
+            this.initiatePaymentPost(obj, headers, payload, this.hashPayloadPost, 
+                this.getExtServerOptions, this.postAndCallback, res);
         }
-        catch(err) { }
+        catch(err) { 
+            //REDIRECT TO PAYMENT FAILURE
+        }
 	}
 }
 

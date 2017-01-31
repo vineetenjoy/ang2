@@ -15,6 +15,7 @@ import { MerchantsService } from './../../services/merchants';
 })
 export class PaymentComponent  {
   paymentType: number;
+  xauth: string;
   color: string;
   initials: string;
   debitColor: string;
@@ -40,6 +41,7 @@ export class PaymentComponent  {
     this.creditColor = this.unselectedColor;
     this.debitColor = this.unselectedColor;
     this.processPaymentURL = this.utilsService.getProcessPaymentURL();
+    this.xauth = this.utilsService.getxauth();
   };
 
   isValidForm() {
