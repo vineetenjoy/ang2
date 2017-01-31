@@ -21,13 +21,13 @@ export class MerchantComponent  {
   ngOnInit() {
     this.index++;
     if(this.index % 4 == 0)
-      this.color = "#73716C";
+      this.color = "#747474";
     else if(this.index % 3 == 0)
-      this.color = "#00A5F3";
+      this.color = "#ffb200";
     else if(this.index % 2 == 0)
-      this.color = "#00A694";
+      this.color = "#e53935";
     else
-      this.color = "#FFAD00";
+      this.color = "#00abc0";
     
     this.colornohash = this.color.substring(1);
 

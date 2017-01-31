@@ -31,9 +31,9 @@ export class PaymentComponent  {
   debitType: number = 2;
   creditType: number = 1;
   nextRoute: string = "";
-  action: string = "Pay Now";
+  action: string = "Proceed";
   title: string = "Secure Payment";
-  selectedColor: string = '#FFF496';
+  selectedColor: string = '#E2E1DD';
   unselectedColor: string = 'transparent';
 
   constructor(private route: ActivatedRoute, private paymentService: PaymentService, private router: Router, 

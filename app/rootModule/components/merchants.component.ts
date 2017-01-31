@@ -29,7 +29,7 @@ export class MerchantsComponent  {
   prevSearch: string = "";
   action: string = "More";
   backRoute: string = "/home";
-  title: string = "Pay Merchants";
+  title: string = "Pay Merchant";
 
   constructor(private route: ActivatedRoute, private router: Router,
     private userService: UserService, private merchantsService: MerchantsService) { };

@@ -111,7 +111,7 @@ export class UtilsService {
       initials = spl[0][0];
 
     if(spl.length > 1 && spl[spl.length-1].length > 0)
-      initials += spl[spl.length-1][0];
+      initials += ' ' + spl[spl.length-1][0];
 
     return initials.toUpperCase();
   }

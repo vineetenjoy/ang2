@@ -5,22 +5,24 @@
             [style.background]="color"> {{initials}} </div>
     </div>
     <div class="col s7">
-        <span style="font-size: 14px;">
+        <span style="font-family: 'Open Sans', sans-serif; font-size: 11pt; color: #3d3d3d">
             <b> {{merchant.displayName}} </b>
         </span>
         <br/>
-        <span style="font-size: 12px; text-transform: capitalize;"> {{merchant.category}} </span>
+        <span style="font-family: 'Open Sans', sans-serif; font-size: 10pt; color: #808285"> {{merchant.category}} </span>
+<!--        <br/>
+        <span style="font-size: 12px; text-transform: capitalize;"> {{merchant.locality}} </span>-->
         <br/>
-        <span style="font-size: 12px; text-transform: capitalize;"> {{merchant.locality}} </span>
-        <br/>
-        <span style="font-size: 10px; text-transform: capitalize;"> {{merchant.paymentModes}} </span>
+        <span style="font-family: 'Open Sans', sans-serif; font-size: 9pt; color: #808285"> 
+            {{merchant.paymentModes}} </span>
     </div>
     <div class="col s3">
-        <div *ngIf="merchant.averageRating">
-            <span style="font-size: 12px; display: inline">
-                <b> {{merchant.averageRating}} </b>
+        <div *ngIf="merchant.averageRating" class="valign-wrapper">
+            <span style="font-family: 'Open Sans', sans-serif; font-size: 10pt; color: #3d3d3d; display: inline">
+                <b> {{merchant.averageRating | number : '1.2-2'}} &nbsp; </b>
             </span>
-            <img style="display: inline;" height="14px;" src="dist/app/images/star.png" />
+            <img style="display: inline; padding-top: 3px;" src="dist/app/images/star2x.png" />
         </div>
     </div>
+    <hr class="col s12" style="margin-top: 15px; height: 2px;border: none;background-color: #EDECEA;color: #EDECEA;"/>
 </div>
