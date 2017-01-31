@@ -7,22 +7,24 @@ import { UserService } from './../../services/user'
 
 @Component({
   moduleId: module.id,
-  selector: 'paymentcallback',
+  selector: 'paymentsuccess',
   templateUrl: './../templates/paymentsuccess.html'
 })
 export class PaymentSuccessComponent  {
   amount: number;
-  merchant: string;
+  pType: string;
+  merchantName: string;
   backURL: string;
   user: User;
-  //success: boolean = true;
-  success: boolean = false;
-  showBack: boolean = true;
-  showBackAndText: boolean = false;
-  action: string = "Find More Merchants";
-  backRoute: string = "/merchants/0";
+  submit: boolean = false;
+  useLogo: boolean = true;
+  showBack: boolean = false;
+  invalidForm: boolean = false;
+  showBackAndText: boolean = true;
+  action: string = "Done";
+  backRoute: string = "";
   nextRoute: string = "/merchants/0";
-  title: string = "Done";
+  title: string = "Payment Successful";
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { };
   
@@ -36,17 +38,9 @@ export class PaymentSuccessComponent  {
         this.router.navigateByUrl('/signup');
     else {
       this.user = usr;
-      /*let pd = this.paymentService.getPaymentDetails();
-      this.merchant = pd.merchant;
-      this.amount = pd.amount;
-      this.backURL = pd.backURL;*/
-
-      if(!this.success) {
-        this.action = "Try Again";
-        this.title = "Payment Gateway Error";
-        this.backRoute = this.backURL;
-        this.nextRoute = this.backURL;
-      }
+      this.amount = 100;
+      this.merchantName = 'Paras Stores';
+      this.pType = 'Credit Card';
     }
   }
 }

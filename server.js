@@ -80,8 +80,8 @@ app.post('/paymentfailure', function(req, res) {
 })
 
 app.post('/paymentsuccess', function(req, res) {
-	console.log(req.body);
-	res.redirect(urls.home);
+	//console.log(req.body);
+	res.redirect(config.me + '#/paymentsuccess');
 })
 
 app.use(function(err, req, res, next) {

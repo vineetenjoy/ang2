@@ -10,13 +10,13 @@
                 <img *ngIf="showBackAndText" src="/app/images/WhiteB2x.png" style="max-height: 64px; width: auto;"/>
             </a>
         </div>
-        <ul *ngIf="!showBack" class="right">
+        <ul *ngIf="!showBack && !showBackAndText" class="right">
             <li>&nbsp;</li>
         </ul>
-        <ul *ngIf="showBack" class="left">
+        <ul *ngIf="showBack || showBackAndText" class="left">
             <li>
                 <a *ngIf="showBackAndText" href="javascript:void(0)" style="font-size: 18pt;">
-                    <i class="left material-icons" [routerLink]="backRoute">navigate_before</i>
+                    <i *ngIf="showBack" class="left material-icons" [routerLink]="backRoute">navigate_before</i>
                     {{title}}
                 </a>
                 <i *ngIf="!showBackAndText"class="left material-icons" [routerLink]="backRoute">navigate_before</i>
