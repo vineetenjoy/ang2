@@ -22,7 +22,7 @@ export class ErrorComponent  {
     backRoute: string = "/home";
     nextRoute: string = "/home";
     title: string = "Error";
-    content: string = "Sorry! Something went wrong.";
+    content: string = "Sorry, Something went wrong!";
 
     constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
@@ -43,6 +43,13 @@ export class ErrorComponent  {
                 this.heading = "Registration Error";
                 this.backRoute = "/powaifest";
                 this.nextRoute = "/powaifest";
+                break;
+            case 4:
+                this.showBackAndText = true;
+                this.title = 'Payment Failed';
+                this.heading = "Payment Failed";
+                this.backRoute = "/merchants/0";
+                this.nextRoute = "/merchants/0";
                 break;
             default:
                 break;

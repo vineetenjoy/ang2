@@ -19,7 +19,7 @@ import { ActionBarComponent } from './components/actionbar.component';
 import { PowaiFestComponent } from './components/powaifest.component';
 import { MerchantsComponent } from './components/merchants.component';
 import { RegisteredComponent } from './components/registered.component';
-import { PaymentCallbackComponent } from './components/paymentcallback.component';
+import { PaymentSuccessComponent } from './components/paymentsuccess.component';
 
 import { UserService } from './../services/user';
 import { UtilsService } from './../services/utils';
@@ -41,8 +41,8 @@ import { MerchantsService } from './../services/merchants';
       component: PaymentComponent
     },
     {
-      path: 'paymentcallback',
-      component: PaymentCallbackComponent
+      path: 'paymentsuccess',
+      component: PaymentSuccessComponent
     },
     {
       path: 'registered',
@@ -82,7 +82,7 @@ import { MerchantsService } from './../services/merchants';
   declarations: [ AppComponent, TopNavComponent, SignUpComponent, OTPComponent, 
     OTPErrorComponent, PowaiFestComponent, MaterializeDirective, ActionBarComponent,
     HomeComponent, MerchantsComponent, RegisteredComponent, PaymentComponent,
-    PaymentCallbackComponent, MerchantComponent, ErrorComponent ],
+    MerchantComponent, ErrorComponent, PaymentSuccessComponent ],
   providers: [UtilsService, SignUpService, MerchantsService, UserService/*,
     {provide: APP_BASE_HREF, useValue: 'powaifest17'}*/],
   bootstrap: [ AppComponent ]

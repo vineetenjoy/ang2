@@ -74,6 +74,16 @@ app.get('/powaifest17', function(req, res) {
 	res.redirect(urls.home);
 });
 
+app.post('/paymentfailure', function(req, res) {
+	//console.log(req.body);
+	res.redirect(config.me + '#/error/4');
+})
+
+app.post('/paymentsuccess', function(req, res) {
+	console.log(req.body);
+	res.redirect(urls.home);
+})
+
 app.use(function(err, req, res, next) {
 	logger.log(err.stack);
 	cUtils.sendErrEmail(req.headers.host + req.url + '\n\n\n' + err.message + '\n\n\n' + err.stack);

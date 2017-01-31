@@ -25,13 +25,13 @@ var config = {
 		key: '',
 		certificate: '',
 	},//For dev.
+	me: 'http://localhost:9090/powaifest17',
 	paymentGateway: {
-		url: 'https://test.payu.in/_payment',
-		furl: 'http://localhost:9090/#/paymentcallback',
 		curl: '',
-		surl: 'http://localhost:9090/#/paymentcallback',
 		key: 'BxGvnf',
-		salt: 'E1fQBYzM'		
+		url: 'https://test.payu.in/_payment',
+		furl: 'http://localhost:9090/paymentfailure',
+		surl: 'http://localhost:9090/paymentsuccess'
 	},
 	beNowSvc: {
 		host: '52.7.181.77',

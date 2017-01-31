@@ -8,9 +8,9 @@ import { UserService } from './../../services/user'
 @Component({
   moduleId: module.id,
   selector: 'paymentcallback',
-  templateUrl: './../templates/paymentcallback.html'
+  templateUrl: './../templates/paymentsuccess.html'
 })
-export class PaymentCallbackComponent  {
+export class PaymentSuccessComponent  {
   amount: number;
   merchant: string;
   backURL: string;
