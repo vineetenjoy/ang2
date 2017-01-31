@@ -1,12 +1,13 @@
 <!--<div style="height: 20px; width: 100%; background-color: #B72127;">&nbsp;</div>-->
 <nav class="nav" style="font-family: 'Fjalla One', sans-serif; color: #ffffff;  background-color: #E53935;">
-    <div class="nav-wrapper">        
+    <div class="nav-wrapper">                
         <div *ngIf="!useLogo" style="font-size: 18pt;" class="brand-logo center">
             {{title}}
         </div>
-        <div *ngIf="useLogo" class="brand-logo center">
+        <div *ngIf="useLogo" [ngClass]="showBackAndText ? 'brand-logo right' : 'brand-logo center'">
             <a href="javascript:void(0)">
-                <img src="/app/images/benow2x.png" style="max-height: 64px; width: auto;"/>
+                <img *ngIf="!showBackAndText" src="/app/images/benow2x.png" style="max-height: 64px; width: auto;"/>
+                <img *ngIf="showBackAndText" src="/app/images/WhiteB2x.png" style="max-height: 64px; width: auto;"/>
             </a>
         </div>
         <ul *ngIf="!showBack" class="right">
@@ -14,7 +15,11 @@
         </ul>
         <ul *ngIf="showBack" class="left">
             <li>
-                <i class="left material-icons" [routerLink]="backRoute">navigate_before</i>
+                <a *ngIf="showBackAndText" href="javascript:void(0)" style="font-size: 18pt;">
+                    <i class="left material-icons" [routerLink]="backRoute">navigate_before</i>
+                    {{title}}
+                </a>
+                <i *ngIf="!showBackAndText"class="left material-icons" [routerLink]="backRoute">navigate_before</i>
 <!--                <img src="/app/images/benow1x.png" />-->
             </li>
         </ul>

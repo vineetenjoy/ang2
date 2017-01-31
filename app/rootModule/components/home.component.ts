@@ -13,6 +13,7 @@ import { UserService } from './../../services/user'
 export class HomeComponent  {
   user: User
   showBack: boolean = false;
+  showBackAndText: boolean = false;
   backRoute: string = "";
   title: string = "Be Now";
 

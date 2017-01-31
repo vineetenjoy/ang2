@@ -1,36 +1,47 @@
 <header>
-    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute"></topnav>
+    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute" [useLogo] = "useLogo"
+        [showBackAndText] = "showBackAndText"></topnav>
 </header>
 <main>
     <div *ngIf="user">
         <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
         <div class="row">
             <div class="col s12" align="center">
-                <img src="dist/app/images/done.png" />
+                <img src="dist/app/images/fest1x.png" />
             </div>
+            <div class="col s12" align="center" style="font-family: 'Fjalla One', sans-serif; color: #3d3d3d; 
+                text-transform: capitalize; font-size: 16pt;">Congratulations!</div>
+        </div>
+        <div class="row" align="center">
+            <div class="col s1"></div>
+            <span class="col s10" align="center"
+                style="font-weight: 400; font-family: 'Open Sans', sans-serif; color: #5a595c; font-size: 12pt;"> 
+                You have successfully registered for Powai Fest 2017 </span>
+            <div class="col s1"></div>
         </div>
         <div class="row"></div>
         <div class="row" align="center">
-            <div class="col s1"></div>
-            <span class="col s10"> Congratulations!!! You have successfully registered to Powai Fest. </span>
-            <div class="col s1"></div>
-        </div>
-        <div class="row" align="center">
-            <div class="col s1"></div>
-            <span class="col s10"> Start exploring merchants
-                <a routerLink="/merchants/0"> here </a>
+            <span class="col s12" align="center"
+                style="font-weight: 400; font-family: 'Open Sans', sans-serif; color: #5a595c; font-size: 12pt;">
+                <a [routerLink]="nextRoute" style="color: #E53935;"> 
+                    <b> Click to Explore Merchants </b> 
+                </a>
             </span>
-            <div class="col s1"></div>
         </div>
         <div *ngIf="user.numSeats && user.numSeatsRequested && user.numSeats < user.numSeatsRequested" 
             class="row" align="center">
             <div class="col s1"></div>
-            <span class="col s10"> Due to unavailability, we could book only {{user.numSeats}} seats.</span>
+            <span class="col s10" align="center"
+                style="font-weight: 400; font-family: 'Open Sans', sans-serif; color: #5a595c; font-size: 12pt;">
+                Due to unavailability, we could book only {{user.numSeats}} seats.</span>
             <div class="col s1"></div>
         </div>
     </div>
 </main>
-<footer style="background-color: #FE2521;"  class="page-footer" align="center">
+<footer style="background-color: #E53935;"  class="page-footer" align="center">
     <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
         [invalidForm]="invalidForm"></actionbar>
 </footer>

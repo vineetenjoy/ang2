@@ -18,6 +18,7 @@ export class OTPComponent  {
   submit: boolean = true;
   useLogo: boolean = true;  
   showBack: boolean = true;
+  showBackAndText: boolean = false;
   action: string = "verify";
   backRoute: string = "/signup";
   nextRoute: string = "";

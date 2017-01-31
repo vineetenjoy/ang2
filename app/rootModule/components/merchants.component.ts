@@ -23,6 +23,7 @@ export class MerchantsComponent  {
   processing: boolean = false;
   invalidForm: boolean = false;
   hasMorePages: boolean = false;
+  showBackAndText: boolean = false;
   search: string = "";
   nextRoute: string = "";
   prevSearch: string = "";
@@ -33,21 +34,24 @@ export class MerchantsComponent  {
   constructor(private route: ActivatedRoute, private router: Router,
     private userService: UserService, private merchantsService: MerchantsService) { };
   
-  fillMerchants(svcMerchants: Merchant[]) {
-    this.hasMorePages = false;
-    this.backRoute = this.merchantsService.getBackRoute();
-    this.page = this.merchantsService.getCurrentPage();
-    this.search = this.merchantsService.getCurrentTerm();
-    if(svcMerchants == null)
-      this.svcError = true;
+  fillMerchants(svcMerchantsStr: string) {
+    if(svcMerchantsStr) {
+      let svcMerchants = JSON.parse(svcMerchantsStr);
+      this.hasMorePages = false;
+      this.backRoute = this.merchantsService.getBackRoute();
+      this.page = this.merchantsService.getCurrentPage();
+      this.search = this.merchantsService.getCurrentTerm();
+      if(svcMerchants == null)
+        this.svcError = true;
 
-    this.merchants = svcMerchants;
-    this.prevSearch = this.search;
-    this.processing = false;
-    if(this.merchantsService.getTotalPages() > this.page + 1) {
-      this.hasMorePages = true;
-      let nextPage: number = this.page + 1;
-      this.nextRoute = '/merchants/' + nextPage.toString() + ';search=' + this.search;
+      this.merchants = svcMerchants;
+      this.prevSearch = this.search;
+      this.processing = false;
+      if(this.merchantsService.getTotalPages() > this.page + 1) {
+        this.hasMorePages = true;
+        let nextPage: number = this.page + 1;
+        this.nextRoute = '/merchants/' + nextPage.toString() + ';search=' + this.search;
+      }
     }
   }
 
@@ -81,7 +85,7 @@ export class MerchantsComponent  {
       this.merchantsService.resetSearches();
       this.route.params
         .switchMap((params: Params) => this.merchantsService.getMerchants(params['search'], +params['page'], this.user))
-        .subscribe(res => this.fillMerchants(res));
+        .subscribe(res => this.fillMerchants(res ? JSON.stringify(res): null));
     }
   }
 }

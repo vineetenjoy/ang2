@@ -14,7 +14,9 @@ export class PowaiFestComponent  {
   user: User;
   submit: boolean = true;
   loaded: boolean = false;
+  useLogo: boolean = true;
   showBack: boolean = true;
+  showBackAndText: boolean = true;
   availableSeats: number;
   action: string = "Register";
   backRoute: string = "/home";

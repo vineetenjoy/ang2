@@ -1,6 +1,7 @@
 <form (ngSubmit)="onSubmit()" #otpForm="ngForm">
     <header>
-        <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute" [useLogo] = "useLogo"></topnav>
+        <topnav [showBack] = "showBack" [showBackAndText] = "showBackAndText" [title] = "title" 
+            [backRoute] = "backRoute" [useLogo] = "useLogo"></topnav>
     </header>
     <main>
         <div *ngIf="user">

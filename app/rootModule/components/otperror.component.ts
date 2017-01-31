@@ -16,6 +16,7 @@ export class OTPErrorComponent  {
   showBack: boolean = true;
   invalidForm: boolean = false;
   showActionBar: boolean = true;
+  showBackAndText: boolean = false;
   action: string = "Try Again";
   backRoute: string = "/signup";
   nextRoute: string = "/signup";

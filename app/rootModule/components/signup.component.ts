@@ -18,6 +18,7 @@ export class SignUpComponent  {
   loaded: boolean = false;
   useLogo: boolean = false;
   showBack: boolean = false;
+  showBackAndText: boolean = false;  
   action: string = "Next";
   backRoute: string = "";
   nextRoute: string = "/otp";

@@ -26,6 +26,7 @@ export class PaymentComponent  {
   submit: boolean = true;
   debitSupport: boolean = false;
   creditSupport: boolean = false;
+  showBackAndText: boolean = false;
   amount: number = 0.00;
   debitType: number = 2;
   creditType: number = 1;

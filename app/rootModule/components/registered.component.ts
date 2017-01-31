@@ -13,13 +13,15 @@ import { UserService } from './../../services/user'
 export class RegisteredComponent  {
   user: User
   submit: boolean = false;
+  useLogo: boolean = true;
   showBack: boolean = true;
   invalidForm: boolean = false;
   showActionBar: boolean = true;
+  showBackAndText: boolean = true;
   action: string = "Find Merchants";
   backRoute: string = "/home";
   nextRoute: string = "/merchants/0";
-  title: string = "Registered";  
+  title: string = "Registration Successful";  
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 

@@ -16,7 +16,9 @@ export class ErrorComponent  {
     useLogo: boolean = true;  
     showBack: boolean = true;
     invalidForm: boolean = false;
-    action: string = "Home";
+    showBackAndText: boolean = false;
+    action: string = "Try Again";
+    heading: string = "Server Error";
     backRoute: string = "/home";
     nextRoute: string = "/home";
     title: string = "Error";
@@ -28,22 +30,19 @@ export class ErrorComponent  {
         let pageId = +this.route.snapshot.params['pageId'];
         switch(pageId) {
             case 1:
-                this.action = "Try Again";
+                this.heading = "OTP Error";
                 this.backRoute = "/signup";
                 this.nextRoute = "/signup";
-                this.content = "Sorry, there was an error in sending OTP!";
                 break;
             case 2:
-                this.action = "Try Again"
+                this.heading = "Verification Error";
                 this.backRoute = "/otp";
                 this.nextRoute = "/otp";                
-                this.content = "Sorry, there was an error in verifying OTP!";
                 break;
             case 3:
-                this.action = "Try Again"
+                this.heading = "Registration Error";
                 this.backRoute = "/powaifest";
                 this.nextRoute = "/powaifest";
-                this.content = "Sorry, there was an error during registration!";                
                 break;
             default:
                 break;
