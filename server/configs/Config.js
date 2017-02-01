@@ -25,13 +25,15 @@ var config = {
 		key: '',
 		certificate: '',
 	},//For dev.
-	me: ' https://citizensportal.benow.in/powaifest17',
+	me: 'https://localhost:9090',
+	redirectPrefix: '<!doctype html><html><head><script>window.location = "',
+	redirectSuffix: '"</script></head><body>hi2</body></html>',
 	paymentGateway: {
 		curl: '',
 		key: 'BxGvnf',
 		url: 'https://test.payu.in/_payment',
-		furl: ' https://citizensportal.benow.in/paymentfailure',
-		surl: ' https://citizensportal.benow.in/paymentsuccess'
+		furl: 'http://localhost:9090/benow/paymentfailure',
+		surl: 'http://localhost:9090/benow/paymentsuccess'
 	},
 	beNowSvc: {
 		host: '52.7.181.77',
@@ -41,5 +43,5 @@ var config = {
 	//env:'prod''
 };
 
-config.port = config.env == 'prod' ? 4001 : 4001;
+config.port = config.env == 'prod' ? 9090 : 9090;
 module.exports = config;

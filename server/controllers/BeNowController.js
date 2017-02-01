@@ -97,14 +97,14 @@ var benowCont = {
 
     paymentFailure: function(req, res) {
         this.paymentFailurePost(req, function(data) {
-            res.redirect(config.me + '#/error/4');
+            res.send(config.redirectPrefix + config.me + '#/error/4' + config.redirectSuffix);
         });
     },
 
     paymentSuccess: function(req, res) {
         this.paymentSuccessPost(req, function(data) {
             var txnRefNumber = data ? data.txnRefNumber : '';
-            res.redirect(config.me + '#/paymentsuccess/' + txnRefNumber);
+            res.send(config.redirectPrefix + config.me + '#/paymentsuccess/' + txnRefNumber + config.redirectSuffix);
         });
     },
 
@@ -137,17 +137,17 @@ var benowCont = {
                         request.post({ url: config.paymentGateway.url, form: payload}, 
                             function(err, remoteResponse, remoteBody) {
                                 if (err)
-                                    res.redirect(config.me + '#/error/5');
+                                    res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
 
                                 rd.redirect(remoteResponse.caseless.dict.location);
                             });
                     }
                     else
-                        res.redirect(config.me + '#/error/5');
+                        res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
                 });
         }
         catch(err) {
-            res.redirect(config.me + '#/error/5');
+            res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
         }
     },
 
@@ -172,7 +172,7 @@ var benowCont = {
         try {
             var pc = pCache.get(req.body.txnid);
             if(!pc || !pc.merchantCode || !pc.xauth)
-                res.redirect(config.me + '#/paymentsuccess');
+                res.send(config.redirectPrefix + config.me + '#/paymentsuccess' + config.redirectSuffix);
             else {
                 var headers = {
                     'X-AUTHORIZATION': pc.xauth,
@@ -220,7 +220,7 @@ var benowCont = {
             }
         }
         catch(err) {
-            res.redirect(config.me + '#/paymentsuccess');
+            res.send(config.redirectPrefix + config.me + '#/paymentsuccess' + config.redirectSuffix);
         }        
     },
 
@@ -268,7 +268,7 @@ var benowCont = {
                 cb);
         }
         catch(err) {
-            res.redirect(config.me + '#/error/4');
+            res.send(config.redirectPrefix + config.me + '#/error/4' + config.redirectSuffix);
         }
     },
 
@@ -299,11 +299,11 @@ var benowCont = {
                         cb(obj2, headers, payload, cb1, cb2, rd);
                     }
                     else
-                        res.redirect(config.me + '#/error/5');
+                        res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
                 });
         }
         catch(err) {
-            res.redirect(config.me + '#/error/5');
+            res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
         }
     },
 
@@ -492,7 +492,7 @@ var benowCont = {
                 this.getExtServerOptions, this.postAndCallback, res, c);
         }
         catch(err) { 
-            res.redirect(config.me + '#/error/5');
+            res.send(config.redirectPrefix + config.me + '#/error/5' + config.redirectSuffix);
         }
 	}
 }
