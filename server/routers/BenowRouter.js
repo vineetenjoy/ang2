@@ -33,6 +33,9 @@ router.post('/pFRegDetails', isAuthenticated, beNowController.pFRegDetails.bind(
 router.post('/numAvailableSeats', isAuthenticated, beNowController.numAvailableSeats.bind(beNowController));
 router.post('/registerInPF', isAuthenticated, beNowController.registerInPF.bind(beNowController));
 router.post('/validateUser', isAuthenticated, beNowController.validateUser.bind(beNowController));
+router.post('/paymentfailure', isAuthenticated, beNowController.paymentFailure.bind(beNowController));
+router.post('/paymentsuccess', isAuthenticated, beNowController.paymentSuccess.bind(beNowController));
+router.post('/getTxnDtls', isAuthenticated, beNowController.getTxnDtls.bind(beNowController));
 /*router.post('/initiatePayment', isAuthenticated, beNowController.registerInPF.bind(beNowController));*/
 /*router.post('/paymentCallback', isAuthenticated, beNowController.paymentCallback.bind(beNowController));*/
 /*router.post('/hashPayload', isAuthenticated, beNowController.hashPayload.bind(beNowController));*/

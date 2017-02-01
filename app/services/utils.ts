@@ -7,7 +7,7 @@ export class UtilsService {
   private _headers: Headers;
 /*  private _baseURL: string = 'http://52.7.181.77:8080/';
   private _processPaymentURL: string = 'http://localhost:9090/benow/processPayment';*/
-  private _baseURL: string = ' https://citizensportal.benow.in/';
+  private _baseURL: string = 'http://localhost:9090/';
   private _processPaymentURL: string = 'benow/processPayment';
   
 /*  private _sendOTPURL: string = 'payments/registration/sendWebOTP';
@@ -21,6 +21,7 @@ export class UtilsService {
 
   private _sendOTPURL: string = 'benow/sendOTP';//
   private _signUpURL: string = 'benow/signUp';//
+  private _txnDetailsURL: string = 'benow/getTxnDtls';
   private _listMerchantsURL: string = 'benow/listMerchants';//
   private _searchMerchantsURL: string = 'benow/searchMerchants';//
   private _pFRegDetailsURL: string = 'benow/pFRegDetails';//
@@ -30,6 +31,10 @@ export class UtilsService {
 
   constructor() {
     this.refreshHeader();
+  }
+
+  getTxnDetailsURL(): string {
+    return this._baseURL + this._txnDetailsURL;
   }
 
   getProcessPaymentURL(): string {

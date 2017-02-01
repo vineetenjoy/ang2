@@ -51,6 +51,13 @@ export class ErrorComponent  {
                 this.backRoute = "/merchants/0";
                 this.nextRoute = "/merchants/0";
                 break;
+            case 5:
+                this.showBackAndText = true;
+                this.title = 'Payment Failed';
+                this.heading = "Payment Gateway Unavailable";
+                this.backRoute = "/merchants/0";
+                this.nextRoute = "/merchants/0";
+                break;
             default:
                 break;
         }

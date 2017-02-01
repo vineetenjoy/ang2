@@ -24,6 +24,7 @@ import { PaymentSuccessComponent } from './components/paymentsuccess.component';
 import { UserService } from './../services/user';
 import { UtilsService } from './../services/utils';
 import { SignUpService } from './../services/signup';
+import { PaymentService } from './../services/payment';
 import { MerchantsService } from './../services/merchants';
 
 @NgModule({
@@ -41,7 +42,7 @@ import { MerchantsService } from './../services/merchants';
       component: PaymentComponent
     },
     {
-      path: 'paymentsuccess',
+      path: 'paymentsuccess/:tNum',
       component: PaymentSuccessComponent
     },
     {
@@ -83,7 +84,7 @@ import { MerchantsService } from './../services/merchants';
     OTPErrorComponent, PowaiFestComponent, MaterializeDirective, ActionBarComponent,
     HomeComponent, MerchantsComponent, RegisteredComponent, PaymentComponent,
     MerchantComponent, ErrorComponent, PaymentSuccessComponent ],
-  providers: [UtilsService, SignUpService, MerchantsService, UserService/*,
+  providers: [UtilsService, SignUpService, MerchantsService, UserService, PaymentService/*,
     {provide: APP_BASE_HREF, useValue: 'powaifest17'}*/],
   bootstrap: [ AppComponent ]
 })
