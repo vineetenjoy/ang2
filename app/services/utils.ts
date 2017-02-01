@@ -7,7 +7,7 @@ export class UtilsService {
   private _headers: Headers;
 /*  private _baseURL: string = 'http://52.7.181.77:8080/';
   private _processPaymentURL: string = 'http://localhost:9090/benow/processPayment';*/
-  private _baseURL: string = 'http://localhost:9090/';
+  private _baseURL: string = ' https://citizensportal.benow.in/';
   private _processPaymentURL: string = 'benow/processPayment';
   
 /*  private _sendOTPURL: string = 'payments/registration/sendWebOTP';

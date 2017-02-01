@@ -5,8 +5,8 @@ var config = {
 		'userCollectionName':'',
 	},
 	logger : {
-		logDir : __dirname + '/../server/log/',
-		logFileName : __dirname + '/../server/log/app.log'
+		logDir : __dirname + '/server/log/',
+		logFileName : __dirname + '/server/log/app.log'
 	},
 	emailSettings:{
 		userid: '',
@@ -25,13 +25,13 @@ var config = {
 		key: '',
 		certificate: '',
 	},//For dev.
-	me: 'http://localhost:9090/powaifest17',
+	me: ' https://citizensportal.benow.in/powaifest17',
 	paymentGateway: {
 		curl: '',
 		key: 'BxGvnf',
 		url: 'https://test.payu.in/_payment',
-		furl: 'http://localhost:9090/paymentfailure',
-		surl: 'http://localhost:9090/paymentsuccess'
+		furl: ' https://citizensportal.benow.in/paymentfailure',
+		surl: ' https://citizensportal.benow.in/paymentsuccess'
 	},
 	beNowSvc: {
 		host: '52.7.181.77',
@@ -41,5 +41,5 @@ var config = {
 	//env:'prod''
 };
 
-config.port = config.env == 'prod' ? 9090 : 9090;
+config.port = config.env == 'prod' ? 4001 : 4001;
 module.exports = config;
