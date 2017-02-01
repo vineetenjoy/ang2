@@ -171,7 +171,6 @@ var benowCont = {
     paymentSuccessPost: function(req, cb) {
         try {
             var pc = pCache.get(req.body.txnid);
-            console.log('KEY GET', JSON.stringify(pc));
             if(!pc || !pc.merchantCode || !pc.xauth)
                 res.redirect(config.me + '#/paymentsuccess');
             else {
@@ -184,7 +183,6 @@ var benowCont = {
                 pc.cardNumber = req.body.cardnum;
                 pc.paymentType = req.body.mode;
                 pCache.set(req.body.txnid, pc);
-                console.log(req.body.txnid, JSON.stringify(pc));
                 this.postAndCallback(this.getExtServerOptions('/payments/paymentadapter/payWebRequest', headers),
                     {
                         "amount": req.body.amount,
@@ -282,7 +280,6 @@ var benowCont = {
                     if(data && data.hdrTransRefNumber) {
                         payload.txnid = data.hdrTransRefNumber;
                         var s = pCache.set(payload.txnid, c);
-                        console.log(payload.txnid, c);
                         var obj2 = {
                             "amount": obj.amount,
                             "email": payload.email,
