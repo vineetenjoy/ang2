@@ -1,0 +1,33 @@
+<header>
+    <topnav [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute" [showBackAndText] = "showBackAndText" 
+        [useLogo] = "useLogo"></topnav>
+</header>
+<main>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s12" align="center">
+            <img src="dist/app/images/error2x.png" />
+        </div>
+        <div class="col s12" align="center" style="font-family: 'Fjalla One', sans-serif; color: #3d3d3d; 
+            text-transform: capitalize; font-size: 16pt;">Verification Error</div>
+    </div>
+    <div class="row" align="center">
+        <span class="col s12" align="center"
+            style="font-weight: 400; font-family: 'Open Sans', sans-serif; color: #5a595c; font-size: 12pt;"> 
+            Sorry, the OTP entered is invalid! </span>
+        <span class="col s12" align="center"
+            style="font-weight: 400; font-family: 'Open Sans', sans-serif; color: #5a595c; font-size: 12pt;">
+            <a routerLink="/signup" style="color: #E53935;"> <b> Return to Sign-Up </b> </a>
+            to re-generate OTP
+        </span>
+    </div>
+</main>
+<footer style="background-color: #E53935;"  class="page-footer" align="center">
+    <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
+        [invalidForm]="invalidForm"></actionbar>
+</footer>

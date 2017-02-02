@@ -1,0 +1,40 @@
+<header>
+    <topnav [showBackAndText] = "showBackAndText" [showBack] = "showBack" [title] = "title" [backRoute] = "backRoute" 
+        [useLogo] = "useLogo"></topnav>
+</header>
+<main>
+    <div *ngIf="payment">    
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row valign-wrapper">
+            <div class="col s1"></div>
+            <div class="col s3">
+                <img src="dist/app/images/paid2x.png" />
+            </div>
+            <div class="col s8" style="font-family: 'Open Sans', sans-serif; font-size: 35pt; color:#3d3d3d;">
+                <span>₹ 
+                    <span style="font-weight: 900;">{{payment.amount  | number : '1.2-2'}}</span>
+                </span>
+            </div>
+        </div>
+        <div class="row" align="center">
+            <span class="col s12" style="font-family: 'Fjalla One', sans-serif; color: #3d3d3d; 
+                font-size: 25pt; margin-top:-15px;"> {{payment.merchantName}} </span>
+        </div>
+        <div class="row"></div>
+        <div class="row" align="center">
+            <span class="col s12" style="font-family: 'Open Sans', sans-serif; font-size: 13pt; font-weight: bold; 
+                color: #3d3d3d;"> Paid Successfully Using {{pType}}</span>
+        </div>
+        <div class="row" align="center">
+            <span class="col s12" style="font-family: 'Open Sans', sans-serif; font-size: 10pt; font-weight: bold;
+                color: #3d3d3d;"> {{payment.cardNumber}}</span>
+        </div>
+    </div>
+</main>
+<footer style="background-color: #E53935;"  class="page-footer" align="center">
+    <actionbar [nextRoute] = "nextRoute" [action] = "action" [submit] = "submit"
+        [invalidForm]="invalidForm"></actionbar>
+</footer>

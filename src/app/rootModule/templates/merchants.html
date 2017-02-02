@@ -1,0 +1,43 @@
+<header>
+    <nav class="nav" style="font-family: 'Fjalla One', sans-serif; color: #ffffff;  background-color: #E53935;">
+        <div class="nav-wrapper">        
+            <div class="brand-logo right">
+                <a href="javascript:void(0)">
+                    <img src="/app/images/WhiteB2x.png" style="max-height: 64px; width: auto;"/>
+                </a>
+            </div>
+            <ul class="left">
+                <li>
+                    <a href="javascript:void(0)" style="font-size: 18pt;">
+                        <i (click)="back()" class="left material-icons" [routerLink]="backRoute">navigate_before</i>
+                        {{title}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="row"></div>
+    <div class="row">
+        <span class="col s12" 
+            style="font-family: 'Open Sans', sans-serif; font-size: 11pt; font-weight: bold; color: #3d3d3d">
+            Search</span>
+        <div class="input-field col s12">
+            <i class="material-icons prefix">search</i>
+            <input id="search" name="search" type="text" class="validate" [(ngModel)]="search" 
+                (keyup.enter)="enter()" style="font-family: 'Open Sans', sans-serif; font-size: 12pt;">
+            <label for="search" [ngClass]="{active: search}">Merchant Name | Code</label>
+        </div>
+    </div>
+    <div *ngIf="!processing">
+        <merchant *ngFor="let merchant of merchants; let i = index;" [merchant] = "merchant" [index] = "i"></merchant>
+    </div>
+</main>
+<footer *ngIf="!processing && hasMorePages" style="background-color: #E53935;"  class="page-footer" align="center">
+    <div class="row">
+        <a class="waves-effect waves-light btn-flat col s12" (click)="more()"
+            style="font-weight: 400; font-family: 'Open Sans', sans-serif; font-size: 18pt; background-color: transparent; 
+            color: #ffffff; text-transform: capitalize;">{{action}}</a>
+    </div>
+</footer>

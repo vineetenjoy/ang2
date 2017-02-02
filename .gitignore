@@ -1,0 +1,9 @@
+/node_modules
+/dist
+/.tmp
+public/app/lib
+typings/globals/express-serve-static-core/
+typings/globals/express/
+typings/globals/serve-static/
+typings/modules/mime/
+uploads/
